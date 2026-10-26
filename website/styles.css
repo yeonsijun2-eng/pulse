@@ -134,7 +134,7 @@ h1 {
   font-size: clamp(30px, 7vw, 76px);
   font-weight: 300;
   letter-spacing: .1em;
-  line-height: 1.15;
+  line-height: 1.08;
   text-align: center;
   text-shadow: 0 8px 55px rgb(255 255 255 / 13%);
 }
@@ -143,12 +143,24 @@ h1 span {
   color: #969ba5;
 }
 
-.hero-copy {
-  margin: 17px 0 0;
-  color: #9297a1;
-  font-size: 13px;
-  line-height: 1.7;
-  text-align: center;
+.credit {
+  position: absolute;
+  bottom: 19px;
+  color: #484c55;
+  font-size: 6px;
+  font-weight: 500;
+  letter-spacing: .12em;
+  user-select: none;
+}
+
+.credit-left {
+  left: 25px;
+}
+
+.credit-right {
+  right: 25px;
+  color: #25272d;
+  font-size: 5px;
 }
 
 .download-button {
@@ -388,8 +400,12 @@ footer {
     letter-spacing: .045em;
   }
 
-  .hero-copy {
-    max-width: 290px;
+  .credit-left {
+    left: 15px;
+  }
+
+  .credit-right {
+    right: 15px;
   }
 
   .information {
