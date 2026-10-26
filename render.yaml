@@ -1,0 +1,6 @@
+services:
+  - type: web
+    name: pulse-download
+    runtime: static
+    buildCommand: ""
+    staticPublishPath: ./website
