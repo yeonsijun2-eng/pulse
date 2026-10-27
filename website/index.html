@@ -10,7 +10,7 @@
 </head>
 <body>
   <main>
-    <section class="hero">
+    <section class="hero" aria-label="PULSE download">
       <a class="project-link"
          href="https://github.com/users/yeonsijun2-eng/projects/1"
          target="_blank"
@@ -20,6 +20,7 @@
           <path d="M9 5H5v14h14v-4M13 5h6v6M19 5l-9 9"/>
         </svg>
       </a>
+      <a class="dashboard-link" href="./dashboard/">ACCOUNT DASHBOARD <span aria-hidden="true">↗</span></a>
       <div class="download">
         <div class="pulse-mark" aria-hidden="true">
           <span></span><span></span><span></span><span></span><span></span>
@@ -36,10 +37,13 @@
       </div>
       <span class="credit credit-left">MADE BY XVZEON</span>
       <span class="credit credit-right">DEMO LOL</span>
-      <div class="bottom-line" aria-hidden="true"><span></span></div>
+      <a class="scroll-cue" href="#release-info">
+        <span>SCROLL TO EXPLORE</span>
+        <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M8 2v11m0 0 4-4m-4 4-4-4"/></svg>
+      </a>
     </section>
 
-    <section class="information">
+    <section class="information" id="release-info">
       <div class="section-heading">
         <span class="section-index">01 / RELEASE</span>
         <h2>Download information</h2>

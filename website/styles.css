@@ -58,6 +58,27 @@ body {
   transition: color 180ms ease, border-color 180ms ease, transform 180ms ease;
 }
 
+.dashboard-link {
+  position: absolute;
+  z-index: 1;
+  top: 45px;
+  left: 38px;
+  color: #a7abb4;
+  font-size: 9px;
+  font-weight: 650;
+  letter-spacing: .13em;
+  text-decoration: none;
+  transition: color 180ms ease;
+}
+
+.dashboard-link:hover {
+  color: #fff;
+}
+
+.dashboard-link span {
+  margin-left: 5px;
+}
+
 .project-link:hover {
   transform: translateY(-2px);
   border-color: rgb(255 255 255 / 38%);
@@ -209,23 +230,41 @@ h1 span {
   font-size: 10px;
 }
 
-.bottom-line {
+.scroll-cue {
   position: absolute;
   bottom: 34px;
   left: 50%;
-  width: 110px;
-  height: 1px;
-  overflow: hidden;
-  background: rgb(255 255 255 / 12%);
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  gap: 7px;
+  color: #888d97;
+  font-size: 8px;
+  font-weight: 650;
+  letter-spacing: .16em;
+  text-decoration: none;
   transform: translateX(-50%);
+  transition: color 180ms ease;
 }
 
-.bottom-line span {
-  display: block;
-  width: 36%;
-  height: 100%;
-  background: #f4f5f7;
-  animation: scan 3.2s ease-in-out infinite alternate;
+.scroll-cue:hover {
+  color: #fff;
+}
+
+.scroll-cue svg {
+  width: 15px;
+  height: 15px;
+  fill: none;
+  stroke: currentColor;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 1.3;
+  animation: cue-down 1.8s ease-in-out infinite;
+}
+
+@keyframes cue-down {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(4px); }
 }
 
 .information {
@@ -592,9 +631,25 @@ footer {
 }
 
 @media (max-width: 520px) {
+  .hero {
+    min-height: max(410px, 72svh);
+  }
+
+  .dashboard-link {
+    top: 47px;
+    left: 20px;
+    max-width: calc(100vw - 90px);
+    font-size: 8px;
+  }
+
   .project-link {
-    top: 20px;
-    right: 20px;
+    top: 31px;
+    right: 18px;
+  }
+
+  .scroll-cue {
+    bottom: 29px;
+    font-size: 7px;
   }
 
   h1 {

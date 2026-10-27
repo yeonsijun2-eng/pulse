@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#08090b">
+  <meta name="pulse-license-api" content="https://pulse-license-api.yydh7707.workers.dev/api">
+  <title>PULSE — Account Dashboard</title>
+  <link rel="stylesheet" href="../styles.css">
+  <link rel="stylesheet" href="./dashboard.css">
+  <script src="./api.js" defer></script>
+  <script src="./dashboard.js" defer></script>
+</head>
+<body class="dashboard-body">
+  <div class="dashboard-shell">
+    <aside class="dashboard-sidebar" id="dashboard-sidebar" aria-label="Dashboard navigation">
+      <a class="dashboard-brand" href="../" aria-label="PULSE home">
+        <span class="brand-mark" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></span>
+        <span>PULSE</span>
+      </a>
+      <p class="sidebar-label">WORKSPACE</p>
+      <nav class="dashboard-nav" aria-label="Account">
+        <button class="nav-item is-active" type="button" data-page="overview"><span class="nav-icon">01</span>Overview</button>
+        <button class="nav-item" type="button" data-page="devices"><span class="nav-icon">02</span>My Devices</button>
+        <button class="nav-item" type="button" data-page="downloads"><span class="nav-icon">03</span>Downloads</button>
+        <button class="nav-item" type="button" data-page="activity"><span class="nav-icon">04</span>Activity</button>
+        <button class="nav-item" type="button" data-page="settings"><span class="nav-icon">05</span>Account Settings</button>
+      </nav>
+      <div class="sidebar-bottom">
+        <div class="account-chip">
+          <span class="account-avatar" id="sidebar-avatar">P</span>
+          <span class="account-meta"><strong id="sidebar-name">Account</strong><small id="sidebar-email">Not signed in</small></span>
+        </div>
+        <button class="signout-button" id="signout-button" type="button" hidden>Sign out</button>
+        <a class="back-link" href="../">Back to pulse.xyz.ci <span aria-hidden="true">↗</span></a>
+      </div>
+    </aside>
+
+    <main class="dashboard-main">
+      <header class="dashboard-topbar">
+        <button class="mobile-menu" id="mobile-menu" type="button" aria-label="Open navigation" aria-expanded="false">☰</button>
+        <span class="topbar-context">ACCOUNT / <span id="topbar-section">OVERVIEW</span></span>
+        <span class="topbar-version">PULSE WEB <i></i></span>
+      </header>
+      <section class="dashboard-content" id="dashboard-content" aria-live="polite">
+        <div class="loading-view" role="status"><span class="loading-mark"></span><span>Checking account session</span></div>
+      </section>
+    </main>
+  </div>
+  <div class="dashboard-scrim" id="dashboard-scrim" hidden></div>
+  <div class="dashboard-toast" id="dashboard-toast" role="status" aria-live="polite" hidden></div>
+  <dialog class="dashboard-dialog" id="dashboard-dialog" aria-labelledby="dialog-title">
+    <form method="dialog" class="dialog-close-form"><button class="icon-close" aria-label="Close dialog">×</button></form>
+    <p class="eyebrow">CONFIRMATION</p>
+    <h2 id="dialog-title">Remove device?</h2>
+    <p id="dialog-message">This action cannot be undone.</p>
+    <div class="dialog-actions"><button class="button button-muted" id="dialog-cancel" type="button">Cancel</button><button class="button button-light" id="dialog-confirm" type="button">Confirm</button></div>
+  </dialog>
+</body>
+</html>
