@@ -5,6 +5,7 @@
 
 # dotenv files
 .env
+.dev.vars*
 
 # User-specific files
 *.rsuser
@@ -293,6 +294,7 @@ FakesAssemblies/
 # Node.js Tools for Visual Studio
 .ntvs_analysis.dat
 node_modules/
+.wrangler/
 dist/
 src-tauri/target/
 *.tsbuildinfo

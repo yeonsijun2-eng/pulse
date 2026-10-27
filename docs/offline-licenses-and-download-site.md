@@ -2,24 +2,16 @@
 
 PULSE verifies ECDSA-signed licenses locally. Licenses are bound to the 32-character device ID shown on the activation screen and are available for 7 days, 30 days, or permanently. Timed licenses expire from their issue time. Because the app verifies licenses offline, a license cannot be remotely revoked and expiration depends on the local system clock.
 
-## Build the app and installer
+## Build the desktop app and installer
 
-From the repository root, publish the self-contained Windows x64 app:
-
-```powershell
-dotnet publish .\ValorantLauncher.csproj --configuration Release -p:PublishProfile=Pulse-win-x64
-```
-
-The app is written to `website\downloads\Pulse.exe`. The installer script packages that executable into a per-user setup program with Start Menu and optional desktop shortcuts. It installs under the current user's Local AppData and does not require administrator access.
-
-Install Inno Setup 6 if needed, then compile the installer:
+From the repository root, build the Windows x64 app and per-user NSIS installer:
 
 ```powershell
-winget install --id JRSoftware.InnoSetup --exact
-& "$env:LOCALAPPDATA\Programs\Inno Setup 6\ISCC.exe" .\Installer\Pulse.iss
+npm ci
+npm run tauri -- build
 ```
 
-The resulting `website\downloads\PulseSetup.exe` is linked from the download page. Upload the `website` directory as a static site after building the app and installer.
+Copy `src-tauri\target\release\pulse.exe` to `website\downloads\Pulse.exe` and `src-tauri\target\release\bundle\nsis\PULSE_1.0.0_x64-setup.exe` to `website\downloads\PulseSetup.exe`. Update the displayed version, installer size, and date in `website\index.html` for each release. The installer targets the current Windows user; an internet connection may be needed to install WebView2 when it is missing.
 
 ## Issue a license without exposing the signing key
 
@@ -41,10 +33,10 @@ Keep a secure backup of `%LOCALAPPDATA%\PULSE-License-Issuer\signing-key.dpapi`.
 
 ## Deploy the website and request API
 
-The Render Blueprint in `render.yaml` defines the static download site and the ASP.NET license API. Provision both services from the repository root. The API uses a persistent 1 GB disk; the paid Render plan is required for persistent disks. Configure `PULSE_ADMIN_PASSWORD` in the API service's secret environment variables with a unique password of at least 24 characters. Never put this value in source control. The allowed website origin is `https://pulse.xyz.ci`; keep it aligned with the static site's custom domain. The API verifies uploaded license codes using only the public key at `LicensingCore\pulse-license-public-key.pem`.
+The Render Blueprint in `render.yaml` publishes the static `website` directory. The license API runs on Cloudflare Workers Free with persistent D1 storage, configured by `wrangler.toml` and `worker\migrations`. Create the D1 database, apply migrations, set `PULSE_ADMIN_PASSWORD` as a Worker secret (use a unique value of at least 24 characters), then deploy with `npm run worker:migrate` and `npm run worker:deploy`. Never put the admin password or signing private key in source control. The allowed website origin is `https://pulse.xyz.ci`; keep it aligned with the static site's custom domain. The Worker verifies uploaded license codes using the same P-256 public key as the desktop app.
 
-The static site files are in `website`; downloads remain under `website\downloads`. Add `pulse.xyz.ci` to the static site's custom domains and configure the DNS records shown by Render. The API is expected at `https://pulse-license-api.onrender.com`; update the `pulse-license-api` meta tag on both website pages if the Render service domain changes.
+The static site files and downloads are under `website`. The Worker endpoint is set in the `pulse-license-api` meta tag on both `website\index.html` and `website\admin\index.html`. D1 stores a hash of each user's private request-receipt token; requests are retained for 180 days and limited to 5 submissions per IP per 30 minutes. Admin sessions expire after 30 minutes and login attempts are rate-limited.
 
 Users paste the device ID from PULSE into the request form. The site returns a private request receipt; the user can keep it in the same browser session or copy and restore it later. The API stores only a hash of this receipt token. Request and signed license records are retained for 180 days; delete requests from the issuer page when they should be removed sooner. No email address or payment details are collected.
 
-For each app release, update the version in `ValorantLauncher.csproj` and `Installer\Pulse.iss`, publish the app and installer, and update the version, file size, and update date on `website\index.html` before deployment.
+The ASP.NET `LicenseServer` remains available for self-hosted deployments; it is not provisioned by the free Render static-site blueprint.
