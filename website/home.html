@@ -1,0 +1,152 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#08090b">
+  <meta name="pulse-license-api" content="https://pulse-license-api.yydh7707.workers.dev/api">
+  <title>PULSE — Windows Desktop</title>
+  <link rel="stylesheet" href="./styles.css">
+</head>
+<body>
+  <main>
+    <section class="hero" aria-label="PULSE download">
+      <a class="project-link"
+         href="https://github.com/users/yeonsijun2-eng/projects/1"
+         target="_blank"
+         rel="noreferrer"
+         aria-label="PULSE GitHub project">
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M9 5H5v14h14v-4M13 5h6v6M19 5l-9 9"/>
+        </svg>
+      </a>
+      <a class="dashboard-link" href="./dashboard/">ACCOUNT DASHBOARD <span aria-hidden="true">↗</span></a>
+      <div class="download">
+        <div class="pulse-mark" aria-hidden="true">
+          <span></span><span></span><span></span><span></span><span></span>
+        </div>
+        <p class="eyebrow">WINDOWS DESKTOP APP</p>
+        <h1>WELCOME TO<br>THE PULSE<span>.</span></h1>
+        <a class="download-button" href="./downloads/PulseSetup.exe" download>
+          <span>DOWNLOAD NOW</span>
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M12 3v12m0 0 5-5m-5 5-5-5M4 17v3h16v-3"/>
+          </svg>
+        </a>
+        <span class="file-note">WINDOWS x64&nbsp; · &nbsp;VERSION 1.0.0</span>
+      </div>
+      <span class="credit credit-left">MADE BY XVZEON</span>
+      <span class="credit credit-right">DEMO LOL</span>
+      <a class="scroll-cue" href="#release-info">
+        <span>SCROLL TO EXPLORE</span>
+        <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M8 2v11m0 0 4-4m-4 4-4-4"/></svg>
+      </a>
+    </section>
+
+    <section class="information" id="release-info">
+      <div class="section-heading">
+        <span class="section-index">01 / RELEASE</span>
+        <h2>Download information</h2>
+      </div>
+      <div class="spec-grid">
+        <article class="spec-card">
+          <span class="spec-label">WINDOWS SUPPORT</span>
+          <strong>Windows 10 / 11</strong>
+          <span class="spec-note">64-bit operating system · Microsoft Edge WebView2</span>
+        </article>
+        <article class="spec-card">
+          <span class="spec-label">LATEST VERSION</span>
+          <strong>1.0.0</strong>
+          <span class="spec-note">PULSE for Windows</span>
+        </article>
+        <article class="spec-card">
+          <span class="spec-label">FILE SIZE</span>
+          <strong>2.8 MB</strong>
+          <span class="spec-note">PULSE installer</span>
+        </article>
+        <article class="spec-card">
+          <span class="spec-label">UPDATED</span>
+          <strong><time datetime="2026-10-27">2026.10.27</time></strong>
+          <span class="spec-note">Latest release</span>
+        </article>
+      </div>
+
+      <div class="section-heading install-heading">
+        <span class="section-index">02 / QUICK START</span>
+        <h2>Installation</h2>
+      </div>
+      <div class="install-grid">
+        <article class="install-step">
+          <span class="step-number">01</span>
+          <div>
+            <h3>Download the installer</h3>
+            <p>Select DOWNLOAD NOW to get PulseSetup.exe.</p>
+          </div>
+        </article>
+        <article class="install-step">
+          <span class="step-number">02</span>
+          <div>
+            <h3>Run setup</h3>
+            <p>Open the downloaded file and follow the setup steps. PULSE installs for your Windows account. An internet connection may be needed to install WebView2 if it is missing.</p>
+          </div>
+        </article>
+        <article class="install-step">
+          <span class="step-number">03</span>
+          <div>
+            <h3>Launch PULSE</h3>
+            <p>Copy your Device ID from the activation screen, submit a license request, then import the downloaded .pulse-license file.</p>
+          </div>
+        </article>
+      </div>
+      <p class="security-note">Windows may show an unrecognized publisher notice. Only run installers downloaded from the official PULSE download page.</p>
+
+      <div class="section-heading license-heading">
+        <span class="section-index">03 / DEVICE LICENSE</span>
+        <h2>Request your PULSE license</h2>
+      </div>
+      <p class="license-intro">Copy the Device ID from the PULSE activation screen and paste it below. Your license is bound to this device.</p>
+      <form class="license-form" id="license-request-form">
+        <label for="device-id">DEVICE ID</label>
+        <div class="license-input-row">
+          <input id="device-id" name="deviceId" type="text" maxlength="32" minlength="32"
+                 pattern="[A-Fa-f0-9]{32}" autocomplete="off" spellcheck="false"
+                 aria-describedby="device-id-help" required>
+          <button class="license-secondary-button" id="copy-device-id" type="button">COPY ID</button>
+        </div>
+        <span id="device-id-help" class="license-help">32 hexadecimal characters from PULSE → DEVICE ACTIVATION.</span>
+        <button class="license-primary-button" type="submit">SUBMIT LICENSE REQUEST</button>
+      </form>
+      <details class="receipt-restore">
+        <summary>RESTORE A SAVED REQUEST RECEIPT</summary>
+        <label for="request-receipt-input">PRIVATE REQUEST RECEIPT</label>
+        <textarea id="request-receipt-input" rows="3" maxlength="1024"
+                  aria-label="Private request receipt"
+                  placeholder="Paste the receipt copied when you submitted the request"></textarea>
+        <button class="license-secondary-button" id="restore-request-receipt" type="button">RESTORE REQUEST</button>
+      </details>
+      <section class="license-receipt" id="license-receipt" aria-live="polite" hidden>
+        <div class="receipt-heading">
+          <div>
+            <span class="spec-label">REQUEST STATUS</span>
+            <strong id="request-status">PENDING</strong>
+          </div>
+          <button class="license-secondary-button" id="check-license-status" type="button">CHECK STATUS</button>
+        </div>
+        <p id="request-message" class="license-help"></p>
+        <div class="receipt-actions">
+          <button class="license-secondary-button" id="copy-request-receipt" type="button">COPY REQUEST RECEIPT</button>
+          <button class="license-primary-button" id="download-license" type="button" disabled>DOWNLOAD LICENSE</button>
+        </div>
+      </section>
+      <p class="license-feedback" id="license-feedback" role="status" aria-live="polite"></p>
+    </section>
+
+    <footer>
+      <span>PULSE</span>
+      <span>Windows x64 · Local-first PC management</span>
+      <a class="issuer-link" href="./admin/">ISSUER</a>
+    </footer>
+  </main>
+  <script src="./license.js" defer></script>
+</body>
+</html>

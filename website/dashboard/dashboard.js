@@ -60,6 +60,7 @@
   }
 
   function setAccount(userInfo) {
+    document.body.classList.remove("is-auth-screen");
     user = userInfo;
     const email = typeof userInfo?.email === "string" ? userInfo.email : "";
     const name = typeof userInfo?.name === "string" && userInfo.name.trim()
@@ -73,6 +74,7 @@
   }
 
   function renderSignIn(message = "Sign in with your PULSE account to access your dashboard.") {
+    document.body.classList.add("is-auth-screen");
     user = null;
     document.querySelector("#signout-button").hidden = true;
     document.querySelector("#sidebar-name").textContent = "Account";
@@ -87,24 +89,37 @@
     content.innerHTML = `
       <section class="signin-layout">
         <div class="signin-copy">
-          <p class="eyebrow">PULSE / ACCOUNT</p>
-          <h1>Your workspace,<br><span>in one place.</span></h1>
-          <p class="signin-description">Sign in to manage your registered devices, account preferences, and PULSE downloads.</p>
+          <a class="signin-brand" href="../home.html" aria-label="PULSE home">
+            <span class="brand-mark" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></span>
+            <span>PULSE</span>
+          </a>
+          <p class="eyebrow">THE PULSE ACCOUNT</p>
+          <h1>Everything<br>in <span>its place.</span></h1>
+          <p class="signin-description">A clear, private space for your PULSE devices, account preferences, and desktop downloads.</p>
+          <div class="signin-highlights" aria-label="Account features">
+            <span><i aria-hidden="true">01</i> Device management</span>
+            <span><i aria-hidden="true">02</i> Official downloads</span>
+            <span><i aria-hidden="true">03</i> Account activity</span>
+          </div>
           <div class="signin-footnote"><span class="status-dot"></span>PRIVATE BY DESIGN <span>·</span> YOUR ACCOUNT DATA STAYS YOURS</div>
         </div>
         <section class="signin-card">
+          <div class="signin-card-heading">
+            <p class="eyebrow">WELCOME TO PULSE</p>
+            <span class="signin-card-mark" aria-hidden="true">P</span>
+          </div>
           <div class="auth-tabs" role="tablist" aria-label="Account access">
-            <button class="auth-tab is-active" id="signin-tab" type="button" role="tab" aria-selected="true" aria-controls="signin-panel">Sign in</button>
-            <button class="auth-tab" id="signup-tab" type="button" role="tab" aria-selected="false" aria-controls="signup-panel">Create account</button>
+            <button class="auth-tab is-active" id="signin-tab" type="button" role="tab" aria-selected="true" aria-controls="signin-form">Sign in</button>
+            <button class="auth-tab" id="signup-tab" type="button" role="tab" aria-selected="false" aria-controls="signup-form">Create account</button>
           </div>
           <form id="signin-form" role="tabpanel" aria-labelledby="signin-tab">
             <p class="eyebrow">ACCOUNT ACCESS</p>
             <h2>Welcome back</h2>
             <p class="signin-hint">Use your PULSE account credentials.</p>
             <label for="signin-email">EMAIL ADDRESS</label>
-            <input id="signin-email" name="email" type="email" autocomplete="username" maxlength="254" required>
+            <input id="signin-email" name="email" type="email" autocomplete="username" maxlength="254" placeholder="name@example.com" required>
             <label for="signin-password">PASSWORD</label>
-            <input id="signin-password" name="password" type="password" autocomplete="current-password" required>
+            <input id="signin-password" name="password" type="password" autocomplete="current-password" placeholder="Enter your password" required>
             <button class="button button-light signin-submit" type="submit">Sign in <span aria-hidden="true">→</span></button>
             <p class="signin-feedback" id="signin-feedback" role="status" aria-live="polite">${escapeHtml(message)}</p>
           </form>
@@ -113,13 +128,13 @@
             <h2>Create your account</h2>
             <p class="signin-hint">Set up an account to access your workspace.</p>
             <label for="signup-name">YOUR NAME</label>
-            <input id="signup-name" name="name" type="text" autocomplete="name" maxlength="80" required>
+            <input id="signup-name" name="name" type="text" autocomplete="name" maxlength="80" placeholder="Your name" required>
             <label for="signup-email">EMAIL ADDRESS</label>
-            <input id="signup-email" name="email" type="email" autocomplete="email" maxlength="254" required>
+            <input id="signup-email" name="email" type="email" autocomplete="email" maxlength="254" placeholder="name@example.com" required>
             <label for="signup-password">PASSWORD</label>
-            <input id="signup-password" name="password" type="password" autocomplete="new-password" minlength="12" required>
+            <input id="signup-password" name="password" type="password" autocomplete="new-password" minlength="12" maxlength="128" placeholder="At least 12 characters" required>
             <label for="signup-password-confirm">CONFIRM PASSWORD</label>
-            <input id="signup-password-confirm" name="passwordConfirm" type="password" autocomplete="new-password" minlength="12" required>
+            <input id="signup-password-confirm" name="passwordConfirm" type="password" autocomplete="new-password" minlength="12" maxlength="128" placeholder="Enter your password again" required>
             <button class="button button-light signin-submit" type="submit">Create account <span aria-hidden="true">→</span></button>
             <p class="signin-feedback" id="signup-feedback" role="status" aria-live="polite">Use an email address you control. Email verification and password recovery are not available yet.</p>
           </form>

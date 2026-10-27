@@ -5,16 +5,16 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#08090b">
   <meta name="pulse-license-api" content="https://pulse-license-api.yydh7707.workers.dev/api">
-  <title>PULSE — Account Dashboard</title>
+  <title>PULSE — Sign in or create an account</title>
   <link rel="stylesheet" href="../styles.css">
   <link rel="stylesheet" href="./dashboard.css">
   <script src="./api.js" defer></script>
   <script src="./dashboard.js" defer></script>
 </head>
-<body class="dashboard-body">
+<body class="dashboard-body is-auth-screen">
   <div class="dashboard-shell">
     <aside class="dashboard-sidebar" id="dashboard-sidebar" aria-label="Dashboard navigation">
-      <a class="dashboard-brand" href="../" aria-label="PULSE home">
+      <a class="dashboard-brand" href="../home.html" aria-label="PULSE home">
         <span class="brand-mark" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></span>
         <span>PULSE</span>
       </a>
@@ -32,7 +32,7 @@
           <span class="account-meta"><strong id="sidebar-name">Account</strong><small id="sidebar-email">Not signed in</small></span>
         </div>
         <button class="signout-button" id="signout-button" type="button" hidden>Sign out</button>
-        <a class="back-link" href="../">Back to pulse.xyz.ci <span aria-hidden="true">↗</span></a>
+        <a class="back-link" href="../home.html">Explore PULSE <span aria-hidden="true">↗</span></a>
       </div>
     </aside>
 
