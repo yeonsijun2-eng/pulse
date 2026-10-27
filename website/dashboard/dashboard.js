@@ -121,15 +121,32 @@
             <label for="signup-password-confirm">CONFIRM PASSWORD</label>
             <input id="signup-password-confirm" name="passwordConfirm" type="password" autocomplete="new-password" minlength="12" required>
             <button class="button button-light signin-submit" type="submit">Create account <span aria-hidden="true">→</span></button>
-            <p class="signin-feedback" id="signup-feedback" role="status" aria-live="polite">Account creation is not connected yet. No account will be created.</p>
+            <p class="signin-feedback" id="signup-feedback" role="status" aria-live="polite">Use an email address you control. Email verification and password recovery are not available yet.</p>
           </form>
-          <p class="service-note"><span>ACCOUNT API</span><strong>Connection required</strong><small>No account login or profile data is currently available. This form will not create or simulate an account.</small></p>
+          <p class="service-note"><span>ACCOUNT SERVICE</span><strong id="account-service-status">Checking connection…</strong><small id="account-service-note">Account access requires a reachable account service.</small></p>
         </section>
       </section>`;
     document.querySelector("#signin-form").addEventListener("submit", signIn);
     document.querySelector("#signup-form").addEventListener("submit", registerAccount);
     document.querySelector("#signin-tab").addEventListener("click", () => selectAuthMode("signin"));
     document.querySelector("#signup-tab").addEventListener("click", () => selectAuthMode("signup"));
+    void updateAccountServiceStatus();
+  }
+
+  async function updateAccountServiceStatus() {
+    const status = document.querySelector("#account-service-status");
+    const note = document.querySelector("#account-service-note");
+    try {
+      const result = await api.getAccountStatus();
+      if (result?.available !== true) throw new Error("The account service is not ready.");
+      status.textContent = "Connected";
+      note.textContent = result.emailVerification === false
+        ? "Passwords are securely hashed. Email verification and password recovery are not available yet."
+        : "Account access is available.";
+    } catch {
+      status.textContent = "Unavailable";
+      note.textContent = "The account service could not be reached. Sign in and registration are not available right now.";
+    }
   }
 
   function selectAuthMode(mode) {
@@ -284,7 +301,7 @@
   function renderDevices() {
     content.innerHTML = `
       <section class="page-heading"><div><p class="eyebrow">ACCOUNT / DEVICES</p><h1>My devices</h1><p class="page-subtitle">Review and manage devices associated with your account.</p></div></section>
-      <section class="panel-card registration-panel"><div><p class="eyebrow">LINK A DEVICE</p><h2>Register a PULSE device</h2><p>Enter the Device ID displayed in the PULSE desktop app. Registering a device does not grant a license or paid access.</p></div><form id="device-form"><label for="device-id">DEVICE ID</label><div class="inline-form"><input id="device-id" name="deviceId" type="text" inputmode="text" minlength="32" maxlength="32" pattern="[A-Fa-f0-9]{32}" autocomplete="off" spellcheck="false" placeholder="32-character device ID" required><button class="button button-light" type="submit">Register device</button></div><small class="form-hint">32 hexadecimal characters · Device ownership is verified by the account service.</small><p class="form-feedback" id="device-feedback" role="status" aria-live="polite"></p></form></section>
+      <section class="panel-card registration-panel"><div><p class="eyebrow">LINK A DEVICE</p><h2>Register a PULSE device</h2><p>Enter the Device ID displayed in the PULSE desktop app. Registering a device does not prove physical ownership or grant a license or paid access.</p></div><form id="device-form"><label for="device-id">DEVICE ID</label><div class="inline-form"><input id="device-id" name="deviceId" type="text" inputmode="text" minlength="32" maxlength="32" pattern="[A-Fa-f0-9]{32}" autocomplete="off" spellcheck="false" placeholder="32-character device ID" required><button class="button button-light" type="submit">Register device</button></div><small class="form-hint">The account service checks the ID format and prevents duplicate registration. This is not device ownership verification.</small><p class="form-feedback" id="device-feedback" role="status" aria-live="polite"></p></form></section>
       <section class="panel-card devices-panel"><div class="panel-heading"><div><p class="eyebrow">YOUR DEVICES</p><h2>Registered devices</h2></div><button class="button button-muted" id="refresh-devices" type="button">Refresh</button></div><div id="device-list" class="device-list"><div class="loading-line"><span class="loading-mark small"></span>Loading registered devices</div></div></section>`;
     document.querySelector("#device-form").addEventListener("submit", registerDevice);
     document.querySelector("#refresh-devices").addEventListener("click", loadDevices);

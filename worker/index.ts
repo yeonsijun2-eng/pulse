@@ -12,6 +12,7 @@ interface D1Statement {
 
 interface D1Database {
   prepare(query: string): D1Statement;
+  batch(statements: D1Statement[]): Promise<D1Result[]>;
 }
 
 interface Env {
@@ -40,6 +41,8 @@ interface LicenseRequest {
 
 const RETENTION_SECONDS = 180 * 24 * 60 * 60;
 const SESSION_SECONDS = 30 * 60;
+const ACCOUNT_SESSION_SECONDS = 14 * 24 * 60 * 60;
+const PASSWORD_ITERATIONS = 210_000;
 const PUBLIC_WINDOW_SECONDS = 30 * 60;
 const ADMIN_WINDOW_SECONDS = 15 * 60;
 const MAX_BODY_BYTES = 4096;
@@ -87,6 +90,15 @@ function base64UrlDecode(value: string): Uint8Array | null {
 
 async function sha256(value: string | Uint8Array): Promise<Uint8Array> {
   return new Uint8Array(await crypto.subtle.digest("SHA-256", typeof value === "string" ? encoder.encode(value) : value));
+}
+
+async function derivePasswordHash(password: string, salt: Uint8Array): Promise<Uint8Array> {
+  const key = await crypto.subtle.importKey("raw", encoder.encode(password), "PBKDF2", false, ["deriveBits"]);
+  return new Uint8Array(await crypto.subtle.deriveBits(
+    { name: "PBKDF2", hash: "SHA-256", salt, iterations: PASSWORD_ITERATIONS },
+    key,
+    256,
+  ));
 }
 
 function safeEqual(left: Uint8Array, right: Uint8Array): boolean {
@@ -218,6 +230,313 @@ function requestSummary(request: LicenseRequest) {
   };
 }
 
+interface AccountRow {
+  id: string;
+  name: string;
+  email: string;
+  created_at: number;
+}
+
+interface AccountSession extends AccountRow {
+  expires_at: number;
+}
+
+function accountSummary(account: AccountRow) {
+  return {
+    id: account.id,
+    name: account.name,
+    email: account.email,
+    status: "active",
+    createdAt: new Date(account.created_at * 1000).toISOString(),
+  };
+}
+
+function logAccountActivity(
+  env: Env,
+  accountId: string,
+  type: string,
+  label: string,
+  timestamp: number,
+): D1Statement {
+  return env.DB.prepare(
+    "INSERT INTO account_activity (account_id, type, label, status, created_at) VALUES (?, ?, ?, 'RECORDED', ?)",
+  ).bind(accountId, type, label, timestamp);
+}
+
+async function authenticateAccount(request: Request, env: Env, now: number): Promise<AccountSession | null> {
+  const match = /^Bearer ([A-Za-z0-9_-]{43})$/.exec(request.headers.get("Authorization") ?? "");
+  if (!match) return null;
+  const tokenHash = base64UrlEncode(await sha256(match[1]));
+  const session = await env.DB.prepare(
+    `SELECT accounts.id, accounts.name, accounts.email, accounts.created_at, account_sessions.expires_at
+     FROM account_sessions JOIN accounts ON accounts.id = account_sessions.account_id
+     WHERE account_sessions.token_hash = ?`,
+  ).bind(tokenHash).first<AccountSession>();
+  if (!session) return null;
+  if (session.expires_at <= now) {
+    await env.DB.prepare("DELETE FROM account_sessions WHERE token_hash = ?").bind(tokenHash).run();
+    return null;
+  }
+  return session;
+}
+
+async function createAccountSession(env: Env, accountId: string, now: number): Promise<string> {
+  const token = base64UrlEncode(crypto.getRandomValues(new Uint8Array(32)));
+  await env.DB.prepare(
+    "INSERT INTO account_sessions (token_hash, account_id, created_at, expires_at) VALUES (?, ?, ?, ?)",
+  ).bind(base64UrlEncode(await sha256(token)), accountId, now, now + ACCOUNT_SESSION_SECONDS).run();
+  return token;
+}
+
+function validEmail(value: string): boolean {
+  return value.length <= 254 && /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(value);
+}
+
+async function handleAccountRequest(
+  request: Request,
+  env: Env,
+  path: string,
+  url: URL,
+  cors: Record<string, string>,
+  now: number,
+): Promise<Response | null> {
+  if (!path.startsWith("/api/account/")) return null;
+
+  if (request.method === "GET" && path === "/api/account/status") {
+    return jsonResponse({
+      available: true,
+      emailVerification: false,
+      passwordRecovery: false,
+    }, 200, cors);
+  }
+
+  if (request.method === "POST" && (path === "/api/account/register" || path === "/api/account/login")) {
+    const isRegister = path.endsWith("/register");
+    const rateLimitKey = isRegister ? "account-register" : "account-login";
+    if (!await applyRateLimit(env, request, rateLimitKey, isRegister ? 5 : 10, 15 * 60)) {
+      return jsonResponse({ error: "Too many attempts. Please try again later." }, 429, cors);
+    }
+
+    const body = await parseBody(request);
+    const email = typeof body?.email === "string" ? body.email.trim().toLowerCase() : "";
+    const password = typeof body?.password === "string" ? body.password : "";
+    if (!validEmail(email) || password.length < 12 || encoder.encode(password).byteLength > 128) {
+      return jsonResponse({ error: "Enter a valid email address and a password between 12 and 128 bytes." }, 400, cors);
+    }
+
+    if (isRegister) {
+      const name = typeof body?.name === "string" ? body.name.trim() : "";
+      if (!name || name.length > 80 || /[\u0000-\u001f\u007f]/.test(name)) {
+        return jsonResponse({ error: "Your name must be between 1 and 80 characters." }, 400, cors);
+      }
+      const existing = await env.DB.prepare("SELECT id FROM accounts WHERE email = ?").bind(email).first<{ id: string }>();
+      if (existing) return jsonResponse({ error: "An account with this email already exists." }, 409, cors);
+
+      const id = crypto.randomUUID();
+      const salt = crypto.getRandomValues(new Uint8Array(16));
+      const passwordHash = await derivePasswordHash(password, salt);
+      try {
+        await env.DB.batch([
+          env.DB.prepare(
+            "INSERT INTO accounts (id, name, email, password_salt, password_hash, created_at, updated_at) VALUES (?, ?, ?, ?, ?, ?, ?)",
+          ).bind(id, name, email, base64UrlEncode(salt), base64UrlEncode(passwordHash), now, now),
+          env.DB.prepare("INSERT INTO account_settings (account_id) VALUES (?)").bind(id),
+          logAccountActivity(env, id, "account_created", "Account created", now),
+        ]);
+      } catch (error) {
+        if (error instanceof Error && /UNIQUE constraint failed: accounts\.email/i.test(error.message)) {
+          return jsonResponse({ error: "An account with this email already exists." }, 409, cors);
+        }
+        throw error;
+      }
+      const token = await createAccountSession(env, id, now);
+      return jsonResponse({ token, expiresInSeconds: ACCOUNT_SESSION_SECONDS }, 201, cors);
+    }
+
+    const account = await env.DB.prepare(
+      "SELECT id, name, email, created_at, password_salt, password_hash FROM accounts WHERE email = ?",
+    ).bind(email).first<AccountRow & { password_salt: string; password_hash: string }>();
+    const salt = account ? base64UrlDecode(account.password_salt) : null;
+    const expectedHash = account ? base64UrlDecode(account.password_hash) : null;
+    const calculatedHash = await derivePasswordHash(password, salt ?? new Uint8Array(16));
+    if (!account || !salt || !expectedHash || !safeEqual(calculatedHash, expectedHash)) {
+      return jsonResponse({ error: "Email or password is incorrect." }, 401, cors);
+    }
+    const token = await createAccountSession(env, account.id, now);
+    await env.DB.prepare(
+      "INSERT INTO account_activity (account_id, type, label, status, created_at) VALUES (?, 'login', 'Signed in', 'RECORDED', ?)",
+    ).bind(account.id, now).run();
+    return jsonResponse({ token, expiresInSeconds: ACCOUNT_SESSION_SECONDS }, 200, cors);
+  }
+
+  const account = await authenticateAccount(request, env, now);
+  if (!account) return jsonResponse({ error: "Your account session has expired. Sign in again." }, 401, cors);
+
+  if (request.method === "GET" && path === "/api/account/me") {
+    return jsonResponse(accountSummary(account), 200, cors);
+  }
+
+  if (request.method === "POST" && path === "/api/account/logout") {
+    const match = /^Bearer ([A-Za-z0-9_-]{43})$/.exec(request.headers.get("Authorization") ?? "");
+    if (match) {
+      await env.DB.batch([
+        env.DB.prepare("DELETE FROM account_sessions WHERE token_hash = ?").bind(base64UrlEncode(await sha256(match[1]))),
+        logAccountActivity(env, account.id, "logout", "Signed out", now),
+      ]);
+    }
+    return new Response(null, { status: 204, headers: cors });
+  }
+
+  if (request.method === "GET" && path === "/api/account/devices") {
+    const { results } = await env.DB.prepare(
+      "SELECT id, device_id, name, registered_at, last_seen_at FROM account_devices WHERE account_id = ? ORDER BY registered_at DESC LIMIT 100",
+    ).bind(account.id).all<{
+      id: string;
+      device_id: string;
+      name: string;
+      registered_at: number;
+      last_seen_at: number;
+    }>();
+    return jsonResponse({
+      devices: results.map(device => ({
+        id: device.id,
+        deviceId: device.device_id,
+        name: device.name,
+        registeredAt: new Date(device.registered_at * 1000).toISOString(),
+        lastSeenAt: new Date(device.last_seen_at * 1000).toISOString(),
+        status: "REGISTERED",
+      })),
+    }, 200, cors);
+  }
+
+  if (request.method === "POST" && path === "/api/account/devices") {
+    const body = await parseBody(request);
+    const deviceId = typeof body?.deviceId === "string" ? body.deviceId.trim().toUpperCase() : "";
+    if (!/^[A-F0-9]{32}$/.test(deviceId)) {
+      return jsonResponse({ error: "Enter the 32-character hexadecimal Device ID shown in PULSE." }, 400, cors);
+    }
+    const deviceCount = await env.DB.prepare(
+      "SELECT COUNT(*) AS count FROM account_devices WHERE account_id = ?",
+    ).bind(account.id).first<{ count: number }>();
+    if ((deviceCount?.count ?? 0) >= 10) {
+      return jsonResponse({ error: "An account can register up to 10 devices." }, 409, cors);
+    }
+    const id = crypto.randomUUID();
+    try {
+      await env.DB.batch([
+        env.DB.prepare(
+          "INSERT INTO account_devices (id, account_id, device_id, name, registered_at, last_seen_at) VALUES (?, ?, ?, 'PULSE Device', ?, ?)",
+        ).bind(id, account.id, deviceId, now, now),
+        logAccountActivity(env, account.id, "device_registered", "Device registered", now),
+      ]);
+    } catch (error) {
+      if (error instanceof Error && /UNIQUE constraint failed: account_devices\.device_id/i.test(error.message)) {
+        return jsonResponse({ error: "This Device ID is already registered to an account." }, 409, cors);
+      }
+      throw error;
+    }
+    return jsonResponse({ id, deviceId, name: "PULSE Device", registeredAt: new Date(now * 1000).toISOString() }, 201, cors);
+  }
+
+  const deviceRoute = /^\/api\/account\/devices\/([a-f0-9-]{36})$/i.exec(path);
+  if (deviceRoute && request.method === "PATCH") {
+    const body = await parseBody(request);
+    const name = typeof body?.name === "string" ? body.name.trim() : "";
+    if (!name || name.length > 64 || /[\u0000-\u001f\u007f]/.test(name)) {
+      return jsonResponse({ error: "Device names must be between 1 and 64 characters." }, 400, cors);
+    }
+    const owned = await env.DB.prepare(
+      "SELECT id FROM account_devices WHERE id = ? AND account_id = ?",
+    ).bind(deviceRoute[1], account.id).first<{ id: string }>();
+    if (!owned) return jsonResponse({ error: "The device was not found." }, 404, cors);
+    await env.DB.batch([
+      env.DB.prepare("UPDATE account_devices SET name = ? WHERE id = ? AND account_id = ?").bind(name, deviceRoute[1], account.id),
+      logAccountActivity(env, account.id, "device_renamed", "Device name updated", now),
+    ]);
+    return jsonResponse({ id: deviceRoute[1], name }, 200, cors);
+  }
+
+  if (deviceRoute && request.method === "DELETE") {
+    const owned = await env.DB.prepare(
+      "SELECT id FROM account_devices WHERE id = ? AND account_id = ?",
+    ).bind(deviceRoute[1], account.id).first<{ id: string }>();
+    if (!owned) return jsonResponse({ error: "The device was not found." }, 404, cors);
+    await env.DB.batch([
+      env.DB.prepare("DELETE FROM account_devices WHERE id = ? AND account_id = ?").bind(deviceRoute[1], account.id),
+      logAccountActivity(env, account.id, "device_removed", "Device removed", now),
+    ]);
+    return new Response(null, { status: 204, headers: cors });
+  }
+
+  if (request.method === "GET" && path === "/api/account/activity") {
+    const requestedLimit = Number(url.searchParams.get("limit") ?? 20);
+    const limit = Number.isInteger(requestedLimit) ? Math.min(Math.max(requestedLimit, 1), 50) : 20;
+    const cursorValue = url.searchParams.get("cursor");
+    const cursor = cursorValue === null ? null : Number(cursorValue);
+    if (cursorValue !== null && (!Number.isSafeInteger(cursor) || cursor! < 1)) {
+      return jsonResponse({ error: "The activity cursor is invalid." }, 400, cors);
+    }
+    const query = cursor === null
+      ? "SELECT id, type, label, status, created_at FROM account_activity WHERE account_id = ? ORDER BY id DESC LIMIT ?"
+      : "SELECT id, type, label, status, created_at FROM account_activity WHERE account_id = ? AND id < ? ORDER BY id DESC LIMIT ?";
+    const { results } = await env.DB.prepare(query)
+      .bind(...(cursor === null ? [account.id, limit + 1] : [account.id, cursor, limit + 1]))
+      .all<{ id: number; type: string; label: string; status: string; created_at: number }>();
+    const hasMore = results.length > limit;
+    const page = results.slice(0, limit);
+    return jsonResponse({
+      items: page.map(item => ({
+        type: item.type,
+        label: item.label,
+        status: item.status,
+        createdAt: new Date(item.created_at * 1000).toISOString(),
+      })),
+      nextCursor: hasMore && page.length ? String(page[page.length - 1].id) : null,
+    }, 200, cors);
+  }
+
+  if (request.method === "PATCH" && path === "/api/account/profile") {
+    const body = await parseBody(request);
+    const name = typeof body?.name === "string" ? body.name.trim() : "";
+    if (!name || name.length > 80 || /[\u0000-\u001f\u007f]/.test(name)) {
+      return jsonResponse({ error: "Your name must be between 1 and 80 characters." }, 400, cors);
+    }
+    await env.DB.batch([
+      env.DB.prepare("UPDATE accounts SET name = ?, updated_at = ? WHERE id = ?").bind(name, now, account.id),
+      logAccountActivity(env, account.id, "profile_updated", "Profile updated", now),
+    ]);
+    return jsonResponse({ name }, 200, cors);
+  }
+
+  if (request.method === "PATCH" && path === "/api/account/settings") {
+    const body = await parseBody(request);
+    if (!body || (body.language !== undefined && body.language !== "en" && body.language !== "ko")
+        || (body.notifications !== undefined && typeof body.notifications !== "boolean")
+        || (body.reduceMotion !== undefined && typeof body.reduceMotion !== "boolean")) {
+      return jsonResponse({ error: "The account settings are invalid." }, 400, cors);
+    }
+    const current = await env.DB.prepare(
+      "SELECT language, notifications, reduce_motion FROM account_settings WHERE account_id = ?",
+    ).bind(account.id).first<{ language: string; notifications: number; reduce_motion: number }>();
+    const settings = {
+      language: body.language ?? current?.language ?? "en",
+      notifications: body.notifications ?? Boolean(current?.notifications),
+      reduceMotion: body.reduceMotion ?? Boolean(current?.reduce_motion),
+    };
+    await env.DB.prepare(
+      `INSERT INTO account_settings (account_id, language, notifications, reduce_motion)
+       VALUES (?, ?, ?, ?)
+       ON CONFLICT(account_id) DO UPDATE SET
+         language = excluded.language,
+         notifications = excluded.notifications,
+         reduce_motion = excluded.reduce_motion`,
+    ).bind(account.id, settings.language, Number(settings.notifications), Number(settings.reduceMotion)).run();
+    return jsonResponse(settings, 200, cors);
+  }
+
+  return jsonResponse({ error: "Account endpoint not found." }, 404, cors);
+}
+
 async function handleRequest(request: Request, env: Env): Promise<Response> {
   const cors = corsHeaders(request, env.PULSE_ALLOWED_ORIGIN);
   if (!cors) return new Response("Origin not allowed", { status: 403 });
@@ -235,6 +554,9 @@ async function handleRequest(request: Request, env: Env): Promise<Response> {
   const url = new URL(request.url);
   const path = url.pathname.replace(/\/+$/, "") || "/";
   const now = Math.floor(Date.now() / 1000);
+
+  const accountResponse = await handleAccountRequest(request, env, path, url, cors, now);
+  if (accountResponse) return accountResponse;
 
   if (request.method === "POST" && path === "/api/license-requests") {
     if (!await applyRateLimit(env, request, "public", 5, PUBLIC_WINDOW_SECONDS)) {

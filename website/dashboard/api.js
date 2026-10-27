@@ -53,7 +53,7 @@
       : null;
     if (!response.ok) {
       if (response.status === 404) {
-        throw new Error("Account services are not connected yet. Device and account data have not been saved.");
+        throw new Error("This account service endpoint is unavailable. No account data was changed.");
       }
       if (response.status === 401) {
         setToken(null);
@@ -69,6 +69,7 @@
   window.PulseAccountApi = Object.freeze({
     getToken,
     setToken,
+    getAccountStatus: () => request("/account/status"),
     async login(email, password) {
       const result = await request("/account/login", {
         method: "POST",
