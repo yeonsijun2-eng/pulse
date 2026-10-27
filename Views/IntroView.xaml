@@ -1,0 +1,43 @@
+<UserControl x:Class="Pulse.Views.IntroView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             Background="Transparent">
+    <Grid x:Name="IntroRoot" ClipToBounds="True">
+        <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
+            <TextBlock x:Name="LogoText"
+                       Text="PULSE"
+                       FontFamily="{StaticResource PulseFont}"
+                       FontSize="54"
+                       FontWeight="Light"
+                       Foreground="{StaticResource TextBrush}"
+                       HorizontalAlignment="Center"
+                       Opacity="0"/>
+            <TextBlock x:Name="SubtitleText"
+                       Text="WELCOME TO PULSE"
+                       FontFamily="{StaticResource PulseFont}"
+                       FontSize="10"
+                       FontWeight="SemiBold"
+                       Foreground="{StaticResource MutedBrush}"
+                       HorizontalAlignment="Center"
+                       Margin="0,12,0,0"
+                       Opacity="0"/>
+        </StackPanel>
+        <Rectangle x:Name="LightSweep"
+                   Width="220"
+                   Height="1"
+                   VerticalAlignment="Center"
+                   IsHitTestVisible="False"
+                   Opacity="0">
+            <Rectangle.Fill>
+                <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
+                    <GradientStop Color="#00FFFFFF" Offset="0"/>
+                    <GradientStop Color="#BFFFFFFF" Offset="0.5"/>
+                    <GradientStop Color="#00FFFFFF" Offset="1"/>
+                </LinearGradientBrush>
+            </Rectangle.Fill>
+            <Rectangle.RenderTransform>
+                <TranslateTransform/>
+            </Rectangle.RenderTransform>
+        </Rectangle>
+    </Grid>
+</UserControl>

@@ -1,5 +1,25 @@
 services:
   - type: web
+    name: pulse-license-api
+    runtime: docker
+    plan: starter
+    dockerfilePath: ./LicenseServer/Dockerfile
+    dockerContext: .
+    healthCheckPath: /healthz
+    disk:
+      name: pulse-license-data
+      mountPath: /var/data
+      sizeGB: 1
+    envVars:
+      - key: PULSE_ADMIN_PASSWORD
+        sync: false
+      - key: PULSE_ALLOWED_ORIGIN
+        value: https://pulse.xyz.ci
+      - key: PULSE_LICENSE_DATA_DIR
+        value: /var/data
+      - key: PULSE_LICENSE_PUBLIC_KEY_PATH
+        value: /app/pulse-license-public-key.pem
+  - type: web
     name: pulse-download
     runtime: static
     buildCommand: ""

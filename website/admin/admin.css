@@ -1,0 +1,150 @@
+.admin-page {
+  width: min(100% - 36px, 900px);
+  min-height: 100svh;
+  margin: 0 auto;
+  padding: 28px 0 60px;
+}
+
+.admin-header,
+.admin-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+}
+
+.admin-brand {
+  color: #f4f5f7;
+  font-size: 13px;
+  font-weight: 650;
+  letter-spacing: .14em;
+  text-decoration: none;
+}
+
+.admin-brand span {
+  margin-left: 12px;
+  color: #858a95;
+  font-size: 9px;
+}
+
+.admin-card {
+  margin-top: 40px;
+  padding: clamp(20px, 5vw, 42px);
+  border: 1px solid #252831;
+  border-radius: 8px;
+  background: linear-gradient(145deg, #111318, #0c0d10);
+}
+
+.admin-title {
+  margin: 9px 0 0;
+  font-size: clamp(26px, 5vw, 38px);
+  font-weight: 350;
+  letter-spacing: -.04em;
+}
+
+.admin-login {
+  max-width: 480px;
+  margin-top: 28px;
+}
+
+.admin-login label {
+  display: block;
+  margin-bottom: 8px;
+  color: #858a95;
+  font-size: 10px;
+  letter-spacing: .1em;
+}
+
+.admin-login .license-primary-button {
+  width: 100%;
+  margin-top: 12px;
+}
+
+.admin-toolbar {
+  margin: 32px 0 14px;
+}
+
+.admin-toolbar h2 {
+  margin: 0;
+}
+
+.request-list {
+  display: grid;
+  gap: 10px;
+}
+
+.request-card {
+  min-width: 0;
+  padding: 17px;
+  border: 1px solid #292c34;
+  border-radius: 6px;
+  background: #0b0c0f;
+}
+
+.request-state {
+  color: #b6bac3;
+  font-size: 9px;
+  font-weight: 650;
+  letter-spacing: .12em;
+}
+
+.request-device {
+  overflow-wrap: anywhere;
+  margin: 10px 0 0;
+  color: #f4f5f7;
+  font-family: Consolas, monospace;
+  font-size: 12px;
+  letter-spacing: .06em;
+}
+
+.request-meta,
+.empty-requests {
+  margin: 8px 0 0;
+  color: #777c86;
+  font-size: 10px;
+}
+
+.request-controls {
+  display: flex;
+  align-items: stretch;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 14px;
+}
+
+.request-term {
+  min-width: 135px;
+  padding: 0 12px;
+  border: 1px solid #383b43;
+  border-radius: 4px;
+  background: #121419;
+  color: #e6e8ed;
+  font-size: 10px;
+}
+
+.admin-license-code {
+  flex: 1 1 100%;
+  resize: vertical;
+  font-family: Consolas, monospace;
+  line-height: 1.6;
+}
+
+[hidden] {
+  display: none !important;
+}
+
+@media (max-width: 520px) {
+  .admin-page {
+    padding-top: 18px;
+  }
+
+  .admin-card {
+    margin-top: 24px;
+  }
+
+  .request-controls > button,
+  .request-term {
+    flex: 1 1 100%;
+    min-height: 40px;
+  }
+}

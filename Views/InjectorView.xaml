@@ -1,0 +1,116 @@
+<UserControl x:Class="Pulse.Views.InjectorView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:models="clr-namespace:Pulse.Models">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <DockPanel Margin="0,0,0,18">
+            <Button DockPanel.Dock="Right"
+                    Content="{DynamicResource InjectAction}"
+                    Style="{StaticResource SolidButton}"
+                    Command="{Binding Shell.InjectCommand}"
+                    MinWidth="120"
+                    ToolTip="{Binding Shell.InjectorAvailabilityText}"/>
+            <StackPanel>
+                <TextBlock Text="{DynamicResource Injector}" Foreground="{StaticResource MutedBrush}" FontSize="11" FontWeight="SemiBold"/>
+                <TextBlock Text="{Binding Status}" FontSize="26" FontWeight="Light" Margin="0,6,0,0" TextWrapping="Wrap"/>
+                <TextBlock Text="{Binding Shell.InjectorAvailabilityText}"
+                           Foreground="{StaticResource MutedBrush}"
+                           FontSize="11"
+                           Margin="0,5,0,0"
+                           TextWrapping="Wrap"/>
+            </StackPanel>
+            <Button DockPanel.Dock="Right"
+                    Content="{DynamicResource ClearLogs}"
+                    Style="{StaticResource GhostButton}"
+                    Padding="10,7"
+                    Margin="0,0,10,0"
+                    VerticalAlignment="Top"
+                    Command="{Binding ClearLogsCommand}"/>
+        </DockPanel>
+
+        <Border Grid.Row="1" Style="{StaticResource HoloCard}" Padding="18" Margin="0,0,0,16">
+            <ProgressBar Style="{StaticResource PulseProgress}" Height="4" Value="{Binding Progress, Mode=OneWay}" Maximum="1"/>
+        </Border>
+
+        <Border Grid.Row="2" Style="{StaticResource HoloCard}">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <TextBlock Text="{DynamicResource Log}" Foreground="{StaticResource MutedBrush}" FontSize="11" FontWeight="SemiBold" Margin="0,0,0,10"/>
+                <ScrollViewer x:Name="LogScrollViewer" Grid.Row="1" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
+                    <ItemsControl ItemsSource="{Binding Logs}">
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <Border Opacity="0" Margin="0,0,0,8">
+                                    <Border.RenderTransform>
+                                        <TranslateTransform Y="4"/>
+                                    </Border.RenderTransform>
+                                    <Border.Triggers>
+                                        <EventTrigger RoutedEvent="Loaded">
+                                            <BeginStoryboard>
+                                                <Storyboard>
+                                                    <DoubleAnimation Storyboard.TargetProperty="Opacity" From="0" To="1" Duration="0:0:0.22"/>
+                                                    <DoubleAnimation Storyboard.TargetProperty="(UIElement.RenderTransform).(TranslateTransform.Y)" From="4" To="0" Duration="0:0:0.22"/>
+                                                </Storyboard>
+                                            </BeginStoryboard>
+                                        </EventTrigger>
+                                    </Border.Triggers>
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="68"/>
+                                            <ColumnDefinition Width="72"/>
+                                            <ColumnDefinition Width="*"/>
+                                        </Grid.ColumnDefinitions>
+                                        <TextBlock FontFamily="Cascadia Mono, Consolas, Courier New"
+                                                   FontSize="11"
+                                                   Foreground="{StaticResource MutedBrush}">
+                                            <Run Text="["/>
+                                            <Run Text="{Binding TimestampText}"/>
+                                            <Run Text="]"/>
+                                        </TextBlock>
+                                        <TextBlock Grid.Column="1"
+                                                   Text="{Binding LevelLabel}"
+                                                   FontFamily="Cascadia Mono, Consolas, Courier New"
+                                                   FontSize="11"
+                                                   FontWeight="SemiBold">
+                                            <TextBlock.Style>
+                                                <Style TargetType="{x:Type TextBlock}">
+                                                    <Setter Property="Foreground" Value="{StaticResource MutedBrush}"/>
+                                                    <Style.Triggers>
+                                                        <DataTrigger Binding="{Binding Level}" Value="{x:Static models:InjectorLogLevel.Success}">
+                                                            <Setter Property="Foreground" Value="{StaticResource TextBrush}"/>
+                                                        </DataTrigger>
+                                                        <DataTrigger Binding="{Binding Level}" Value="{x:Static models:InjectorLogLevel.Warning}">
+                                                            <Setter Property="Foreground" Value="#D7B86A"/>
+                                                        </DataTrigger>
+                                                        <DataTrigger Binding="{Binding Level}" Value="{x:Static models:InjectorLogLevel.Error}">
+                                                            <Setter Property="Foreground" Value="#E77D7D"/>
+                                                        </DataTrigger>
+                                                    </Style.Triggers>
+                                                </Style>
+                                            </TextBlock.Style>
+                                        </TextBlock>
+                                        <TextBlock Grid.Column="2"
+                                                   Text="{Binding Message}"
+                                                   FontFamily="Cascadia Mono, Consolas, Courier New"
+                                                   FontSize="12"
+                                                   Foreground="{StaticResource TextBrush}"
+                                                   TextWrapping="Wrap"/>
+                                    </Grid>
+                                </Border>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+                </ScrollViewer>
+            </Grid>
+        </Border>
+    </Grid>
+</UserControl>

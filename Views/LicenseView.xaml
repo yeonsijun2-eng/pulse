@@ -1,0 +1,80 @@
+<UserControl x:Class="Pulse.Views.LicenseView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <Grid FocusManager.FocusedElement="{Binding ElementName=KeyInput}">
+        <Border Width="490"
+                MaxWidth="700"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center"
+                Style="{StaticResource HoloCard}"
+                Padding="36">
+            <StackPanel>
+                <TextBlock Text="PULSE"
+                           HorizontalAlignment="Center"
+                           FontSize="32"
+                           FontWeight="Light"
+                           Margin="0,0,0,8"/>
+                <TextBlock Text="{DynamicResource LicenseAuthentication}"
+                           HorizontalAlignment="Center"
+                           Foreground="{StaticResource MutedBrush}"
+                           FontSize="11"
+                           FontWeight="SemiBold"
+                           Margin="0,0,0,30"/>
+
+                <TextBlock Text="{DynamicResource LicenseKey}"
+                           Foreground="{StaticResource MutedBrush}"
+                           FontSize="10"
+                           FontWeight="SemiBold"/>
+                <TextBox x:Name="KeyInput"
+                         Text="{Binding LicenseKey, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
+                         Style="{StaticResource LicenseKeyInput}"
+                         Margin="0,8,0,0"
+                         MaxLength="1024"
+                         ToolTip="{DynamicResource LicenseKeyFormat}"
+                         PreviewKeyDown="KeyInput_OnPreviewKeyDown"/>
+                <Button Content="{DynamicResource ImportLicenseFile}"
+                        Style="{StaticResource GhostButton}"
+                        Margin="0,9,0,0"
+                        MinHeight="38"
+                        Click="ImportLicenseFile_OnClick"/>
+
+                <TextBlock Text="{DynamicResource DeviceId}"
+                           Foreground="{StaticResource MutedBrush}"
+                           FontSize="10"
+                           FontWeight="SemiBold"
+                           Margin="0,18,0,0"/>
+                <TextBox Text="{Binding DeviceId, Mode=OneWay}"
+                         IsReadOnly="True"
+                         IsTabStop="True"
+                         Style="{StaticResource LicenseKeyInput}"
+                         Margin="0,8,0,0"
+                         ToolTip="{DynamicResource DeviceIdHint}"/>
+
+                <TextBlock x:Name="ErrorMessage"
+                           Text="{Binding Error, NotifyOnTargetUpdated=True}"
+                           Foreground="{StaticResource TextBrush}"
+                           FontSize="12"
+                           Margin="2,10,2,0"
+                           TextWrapping="Wrap"
+                           MinHeight="18"
+                           TargetUpdated="ErrorMessage_OnTargetUpdated"/>
+
+                <CheckBox Content="{DynamicResource RememberMe}"
+                          IsChecked="{Binding RememberMe}"
+                          HorizontalAlignment="Left"
+                          Margin="0,15,0,20"/>
+
+                <Button Content="{DynamicResource ActivateLicense}"
+                        Style="{StaticResource SolidButton}"
+                        MinHeight="46"
+                        IsDefault="True"
+                        Command="{Binding ActivateCommand}"/>
+
+                <ProgressBar Style="{StaticResource PulseProgress}"
+                             Height="3"
+                             Margin="0,16,0,0"
+                             IsIndeterminate="{Binding IsBusy}"/>
+            </StackPanel>
+        </Border>
+    </Grid>
+</UserControl>

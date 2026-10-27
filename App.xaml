@@ -1,0 +1,33 @@
+﻿<Application x:Class="Pulse.App"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:vm="clr-namespace:Pulse.ViewModels"
+             xmlns:views="clr-namespace:Pulse.Views"
+             StartupUri="MainWindow.xaml">
+    <Application.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="Themes/AppStyles.xaml"/>
+                <ResourceDictionary Source="Themes/Strings.en.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+            <DataTemplate DataType="{x:Type vm:IntroViewModel}">
+                <views:IntroView/>
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type vm:LicenseViewModel}">
+                <views:LicenseView/>
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type vm:SetupViewModel}">
+                <views:SetupView/>
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type vm:HomeViewModel}">
+                <views:HomeView/>
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type vm:InjectorViewModel}">
+                <views:InjectorView/>
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type vm:SettingsViewModel}">
+                <views:SettingsView/>
+            </DataTemplate>
+        </ResourceDictionary>
+    </Application.Resources>
+</Application>

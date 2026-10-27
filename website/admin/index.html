@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#08090b">
+  <meta name="pulse-license-api" content="https://pulse-license-api.onrender.com/api">
+  <title>PULSE — License Issuer</title>
+  <link rel="stylesheet" href="../styles.css">
+  <link rel="stylesheet" href="./admin.css">
+  <script src="./admin.js" defer></script>
+</head>
+<body>
+  <main class="admin-page">
+    <header class="admin-header">
+      <a href="../" class="admin-brand">PULSE <span>LICENSE ISSUER</span></a>
+      <button id="logout-button" class="license-secondary-button" type="button" hidden>LOG OUT</button>
+    </header>
+    <section class="admin-card">
+      <p class="section-index">DEVICE-BOUND LICENSES</p>
+      <h1 class="admin-title">License requests</h1>
+      <p class="license-intro">Review device IDs, select a term, sign the license on the issuer PC, then upload the signed code.</p>
+      <form id="admin-login" class="admin-login">
+        <label for="admin-password">ADMIN PASSWORD</label>
+        <input id="admin-password" type="password" minlength="24" autocomplete="current-password" required>
+        <button class="license-primary-button" type="submit">SIGN IN</button>
+      </form>
+      <p id="admin-feedback" class="license-feedback" role="status" aria-live="polite"></p>
+      <section id="admin-dashboard" hidden>
+        <div class="admin-toolbar">
+          <h2>Requests</h2>
+          <button id="refresh-requests" class="license-secondary-button" type="button">REFRESH</button>
+        </div>
+        <div id="request-list" class="request-list"></div>
+      </section>
+    </section>
+  </main>
+</body>
+</html>

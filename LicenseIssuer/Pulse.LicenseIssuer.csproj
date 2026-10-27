@@ -1,0 +1,16 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net8.0-windows</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <RootNamespace>Pulse.LicenseIssuer</RootNamespace>
+    <AssemblyName>PulseLicenseIssuer</AssemblyName>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="System.Security.Cryptography.ProtectedData" Version="8.0.0" />
+    <Compile Include="..\LicensingCore\OfflineLicenseCodec.cs" Link="LicensingCore\OfflineLicenseCodec.cs" />
+    <EmbeddedResource Include="..\LicensingCore\pulse-license-public-key.pem"
+                      LogicalName="Pulse.LicensingCore.PublicKey.pem" />
+  </ItemGroup>
+</Project>

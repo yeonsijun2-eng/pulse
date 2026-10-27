@@ -1,0 +1,108 @@
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <sys:String x:Key="NavHome" xmlns:sys="clr-namespace:System;assembly=mscorlib">홈</sys:String>
+    <sys:String x:Key="NavInjector" xmlns:sys="clr-namespace:System;assembly=mscorlib">시뮬레이션</sys:String>
+    <sys:String x:Key="NavSettings" xmlns:sys="clr-namespace:System;assembly=mscorlib">설정</sys:String>
+    <sys:String x:Key="Setup" xmlns:sys="clr-namespace:System;assembly=mscorlib">설정</sys:String>
+    <sys:String x:Key="LicenseAuthentication" xmlns:sys="clr-namespace:System;assembly=mscorlib">라이선스 인증</sys:String>
+    <sys:String x:Key="LicenseKey" xmlns:sys="clr-namespace:System;assembly=mscorlib">라이선스 키</sys:String>
+    <sys:String x:Key="LicenseKeyFormat" xmlns:sys="clr-namespace:System;assembly=mscorlib">이 기기용으로 발급된 PULSE1 서명 라이선스 키를 붙여넣으세요</sys:String>
+    <sys:String x:Key="DeviceId" xmlns:sys="clr-namespace:System;assembly=mscorlib">기기 ID — 발급자에게 전달하세요</sys:String>
+    <sys:String x:Key="DeviceIdHint" xmlns:sys="clr-namespace:System;assembly=mscorlib">이 ID를 선택해 복사한 뒤 기기 전용 라이선스를 요청하세요</sys:String>
+    <sys:String x:Key="RememberMe" xmlns:sys="clr-namespace:System;assembly=mscorlib">로그인 기억하기</sys:String>
+    <sys:String x:Key="ActivateLicense" xmlns:sys="clr-namespace:System;assembly=mscorlib">라이선스 활성화</sys:String>
+    <sys:String x:Key="InvalidKeyFormat" xmlns:sys="clr-namespace:System;assembly=mscorlib">이 기기용으로 발급된 전체 서명 라이선스 키를 입력하세요.</sys:String>
+    <sys:String x:Key="InvalidLicenseKey" xmlns:sys="clr-namespace:System;assembly=mscorlib">유효하지 않은 라이선스 키</sys:String>
+    <sys:String x:Key="LicenseExpiredError" xmlns:sys="clr-namespace:System;assembly=mscorlib">라이선스 만료</sys:String>
+    <sys:String x:Key="LicenseRevokedError" xmlns:sys="clr-namespace:System;assembly=mscorlib">라이선스 차단됨</sys:String>
+    <sys:String x:Key="LicenseRequired" xmlns:sys="clr-namespace:System;assembly=mscorlib">이 기능을 사용하려면 유효한 라이선스가 필요합니다.</sys:String>
+    <sys:String x:Key="LogoutFailed" xmlns:sys="clr-namespace:System;assembly=mscorlib">저장된 라이선스 세션을 완전히 삭제하지 못했습니다</sys:String>
+    <sys:String x:Key="ConnectionFailed" xmlns:sys="clr-namespace:System;assembly=mscorlib">서버 연결 실패</sys:String>
+    <sys:String x:Key="SessionStorageFailed" xmlns:sys="clr-namespace:System;assembly=mscorlib">세션 저장 실패</sys:String>
+    <sys:String x:Key="SettingsLoadFailed" xmlns:sys="clr-namespace:System;assembly=mscorlib">설정을 불러오지 못했습니다. 기본 환경 설정을 사용합니다.</sys:String>
+    <sys:String x:Key="InvalidServerResponse" xmlns:sys="clr-namespace:System;assembly=mscorlib">라이선스 서버의 응답에 필수 정보가 없거나 올바르지 않습니다.</sys:String>
+    <sys:String x:Key="Calibrating" xmlns:sys="clr-namespace:System;assembly=mscorlib">PULSE 초기 설정</sys:String>
+    <sys:String x:Key="StepInterface" xmlns:sys="clr-namespace:System;assembly=mscorlib">인터페이스 초기화</sys:String>
+    <sys:String x:Key="StepSystem" xmlns:sys="clr-namespace:System;assembly=mscorlib">시스템 정보 확인</sys:String>
+    <sys:String x:Key="StepValorant" xmlns:sys="clr-namespace:System;assembly=mscorlib">VALORANT 설치 확인</sys:String>
+    <sys:String x:Key="StepFinalize" xmlns:sys="clr-namespace:System;assembly=mscorlib">설정 마무리</sys:String>
+    <sys:String x:Key="StepWorking" xmlns:sys="clr-namespace:System;assembly=mscorlib">확인 중…</sys:String>
+    <sys:String x:Key="SetupWaiting" xmlns:sys="clr-namespace:System;assembly=mscorlib">실행 환경을 준비하고 있습니다…</sys:String>
+    <sys:String x:Key="StepReady" xmlns:sys="clr-namespace:System;assembly=mscorlib">인터페이스와 환경 설정을 준비했습니다.</sys:String>
+    <sys:String x:Key="StepInstalled" xmlns:sys="clr-namespace:System;assembly=mscorlib">설치를 확인했습니다.</sys:String>
+    <sys:String x:Key="StepNotFound" xmlns:sys="clr-namespace:System;assembly=mscorlib">VALORANT를 찾지 못했습니다. 설정을 계속한 뒤 나중에 설치할 수 있습니다.</sys:String>
+    <sys:String x:Key="StepValorantNotFoundDetail" xmlns:sys="clr-namespace:System;assembly=mscorlib">설치되지 않음 — 설정이 끝난 뒤 공식 웹사이트에서 설치할 수 있습니다.</sys:String>
+    <sys:String x:Key="StepSaved" xmlns:sys="clr-namespace:System;assembly=mscorlib">환경 설정을 저장했습니다.</sys:String>
+    <sys:String x:Key="SystemDetails" xmlns:sys="clr-namespace:System;assembly=mscorlib">{0} · {1} · 프로세서 {2}개</sys:String>
+    <sys:String x:Key="Cancelled" xmlns:sys="clr-namespace:System;assembly=mscorlib">취소됨</sys:String>
+    <sys:String x:Key="SetupPaused" xmlns:sys="clr-namespace:System;assembly=mscorlib">설정 일시 중지</sys:String>
+    <sys:String x:Key="Retry" xmlns:sys="clr-namespace:System;assembly=mscorlib">재시도</sys:String>
+    <sys:String x:Key="Status" xmlns:sys="clr-namespace:System;assembly=mscorlib">상태</sys:String>
+    <sys:String x:Key="InstallPath" xmlns:sys="clr-namespace:System;assembly=mscorlib">설치 경로</sys:String>
+    <sys:String x:Key="NoVerifiedPath" xmlns:sys="clr-namespace:System;assembly=mscorlib">확인된 경로 없음</sys:String>
+    <sys:String x:Key="Launch" xmlns:sys="clr-namespace:System;assembly=mscorlib">VALORANT 실행</sys:String>
+    <sys:String x:Key="Download" xmlns:sys="clr-namespace:System;assembly=mscorlib">VALORANT 다운로드</sys:String>
+    <sys:String x:Key="RetryScan" xmlns:sys="clr-namespace:System;assembly=mscorlib">다시 검색</sys:String>
+    <sys:String x:Key="Browse" xmlns:sys="clr-namespace:System;assembly=mscorlib">찾아보기</sys:String>
+    <sys:String x:Key="NotFoundHeadline" xmlns:sys="clr-namespace:System;assembly=mscorlib">VALORANT를 찾을 수 없음</sys:String>
+    <sys:String x:Key="PathInvalid" xmlns:sys="clr-namespace:System;assembly=mscorlib">경로가 올바르지 않음</sys:String>
+    <sys:String x:Key="InstallNotice" xmlns:sys="clr-namespace:System;assembly=mscorlib">VALORANT가 아직 설치되지 않았습니다. Riot 공식 웹사이트에서 설치하거나, 이미 설치했다면 다시 검색해 주세요.</sys:String>
+    <sys:String x:Key="Dismiss" xmlns:sys="clr-namespace:System;assembly=mscorlib">닫기</sys:String>
+    <sys:String x:Key="Injector" xmlns:sys="clr-namespace:System;assembly=mscorlib">인젝터</sys:String>
+    <sys:String x:Key="SimulationSafety" xmlns:sys="clr-namespace:System;assembly=mscorlib">데모 모드 · 게임 코드나 메모리를 수정하지 않습니다.</sys:String>
+    <sys:String x:Key="DemoGameDetected" xmlns:sys="clr-namespace:System;assembly=mscorlib">VALORANT 감지됨 · 시각 데모 사용 가능</sys:String>
+    <sys:String x:Key="DemoWaitingForGame" xmlns:sys="clr-namespace:System;assembly=mscorlib">VALORANT 감지를 기다리는 중</sys:String>
+    <sys:String x:Key="Log" xmlns:sys="clr-namespace:System;assembly=mscorlib">작업 기록</sys:String>
+    <sys:String x:Key="ClearLogs" xmlns:sys="clr-namespace:System;assembly=mscorlib">로그 지우기</sys:String>
+    <sys:String x:Key="Animations" xmlns:sys="clr-namespace:System;assembly=mscorlib">애니메이션</sys:String>
+    <sys:String x:Key="AnimationsDescription" xmlns:sys="clr-namespace:System;assembly=mscorlib">시작 및 화면 전환 애니메이션을 사용합니다.</sys:String>
+    <sys:String x:Key="LogInitializing" xmlns:sys="clr-namespace:System;assembly=mscorlib">환경 초기화 중...</sys:String>
+    <sys:String x:Key="LogLoadingConfiguration" xmlns:sys="clr-namespace:System;assembly=mscorlib">설정 불러오는 중...</sys:String>
+    <sys:String x:Key="LogPreparingModules" xmlns:sys="clr-namespace:System;assembly=mscorlib">시각 모듈 준비 중...</sys:String>
+    <sys:String x:Key="LogProcessingProgress" xmlns:sys="clr-namespace:System;assembly=mscorlib">진행 표시 처리 중...</sys:String>
+    <sys:String x:Key="LogFinalizingSequence" xmlns:sys="clr-namespace:System;assembly=mscorlib">시각 시퀀스 마무리 중...</sys:String>
+    <sys:String x:Key="LogSequenceComplete" xmlns:sys="clr-namespace:System;assembly=mscorlib">시각 시퀀스가 완료되었습니다.</sys:String>
+    <sys:String x:Key="LogSequenceCancelled" xmlns:sys="clr-namespace:System;assembly=mscorlib">시각 시퀀스가 취소되었습니다.</sys:String>
+    <sys:String x:Key="LogSequenceFailed" xmlns:sys="clr-namespace:System;assembly=mscorlib">시각 시퀀스에 실패했습니다.</sys:String>
+    <sys:String x:Key="LaunchingValorant" xmlns:sys="clr-namespace:System;assembly=mscorlib">VALORANT 실행 중...</sys:String>
+    <sys:String x:Key="ValorantRunningResult" xmlns:sys="clr-namespace:System;assembly=mscorlib">VALORANT가 실행 중입니다.</sys:String>
+    <sys:String x:Key="Settings" xmlns:sys="clr-namespace:System;assembly=mscorlib">설정</sys:String>
+    <sys:String x:Key="Language" xmlns:sys="clr-namespace:System;assembly=mscorlib">언어</sys:String>
+    <sys:String x:Key="LanguageDescription" xmlns:sys="clr-namespace:System;assembly=mscorlib">PULSE에서 사용할 언어를 선택하세요.</sys:String>
+    <sys:String x:Key="Storage" xmlns:sys="clr-namespace:System;assembly=mscorlib">저장 공간</sys:String>
+    <sys:String x:Key="SaveSettings" xmlns:sys="clr-namespace:System;assembly=mscorlib">설정 저장</sys:String>
+    <sys:String x:Key="ResetSettings" xmlns:sys="clr-namespace:System;assembly=mscorlib">설정 초기화</sys:String>
+    <sys:String x:Key="English" xmlns:sys="clr-namespace:System;assembly=mscorlib">English</sys:String>
+    <sys:String x:Key="Korean" xmlns:sys="clr-namespace:System;assembly=mscorlib">한국어</sys:String>
+    <sys:String x:Key="LicenseType7Day" xmlns:sys="clr-namespace:System;assembly=mscorlib">7일 라이선스</sys:String>
+    <sys:String x:Key="LicenseType30Day" xmlns:sys="clr-namespace:System;assembly=mscorlib">30일 라이선스</sys:String>
+    <sys:String x:Key="LicenseTypePermanent" xmlns:sys="clr-namespace:System;assembly=mscorlib">영구 라이선스</sys:String>
+    <sys:String x:Key="ImportLicenseFile" xmlns:sys="clr-namespace:System;assembly=mscorlib">라이선스 파일 가져오기</sys:String>
+    <sys:String x:Key="LicenseFileReadFailed" xmlns:sys="clr-namespace:System;assembly=mscorlib">선택한 라이선스 파일을 읽지 못했습니다.</sys:String>
+    <sys:String x:Key="LicenseActive" xmlns:sys="clr-namespace:System;assembly=mscorlib">활성</sys:String>
+    <sys:String x:Key="LicenseExpired" xmlns:sys="clr-namespace:System;assembly=mscorlib">만료</sys:String>
+    <sys:String x:Key="LicenseRevoked" xmlns:sys="clr-namespace:System;assembly=mscorlib">차단됨</sys:String>
+    <sys:String x:Key="NeverExpires" xmlns:sys="clr-namespace:System;assembly=mscorlib">만료일 없음</sys:String>
+    <sys:String x:Key="StatusUnavailable" xmlns:sys="clr-namespace:System;assembly=mscorlib">상태를 확인할 수 없음</sys:String>
+    <sys:String x:Key="ExpiresInDays" xmlns:sys="clr-namespace:System;assembly=mscorlib">{0}일 후 만료</sys:String>
+    <sys:String x:Key="ExpiresInHours" xmlns:sys="clr-namespace:System;assembly=mscorlib">{0}시간 후 만료</sys:String>
+    <sys:String x:Key="ExpiresInMinutes" xmlns:sys="clr-namespace:System;assembly=mscorlib">{0}분 후 만료</sys:String>
+    <sys:String x:Key="ExpiryDate" xmlns:sys="clr-namespace:System;assembly=mscorlib">만료 {0}</sys:String>
+    <sys:String x:Key="LicenseStatus" xmlns:sys="clr-namespace:System;assembly=mscorlib">라이선스 상태</sys:String>
+    <sys:String x:Key="LicenseTypeLabel" xmlns:sys="clr-namespace:System;assembly=mscorlib">라이선스 유형</sys:String>
+    <sys:String x:Key="Expires" xmlns:sys="clr-namespace:System;assembly=mscorlib">만료 시각</sys:String>
+    <sys:String x:Key="Logout" xmlns:sys="clr-namespace:System;assembly=mscorlib">로그아웃</sys:String>
+    <sys:String x:Key="InjectAction" xmlns:sys="clr-namespace:System;assembly=mscorlib">인젝트</sys:String>
+    <sys:String x:Key="IdleSimulation" xmlns:sys="clr-namespace:System;assembly=mscorlib">VALORANT 감지 대기 중</sys:String>
+    <sys:String x:Key="Preparing" xmlns:sys="clr-namespace:System;assembly=mscorlib">준비 중...</sys:String>
+    <sys:String x:Key="Processing" xmlns:sys="clr-namespace:System;assembly=mscorlib">처리 중...</sys:String>
+    <sys:String x:Key="Injecting" xmlns:sys="clr-namespace:System;assembly=mscorlib">인젝션 중...</sys:String>
+    <sys:String x:Key="SimulationCancelled" xmlns:sys="clr-namespace:System;assembly=mscorlib">시뮬레이션 취소됨</sys:String>
+    <sys:String x:Key="SimulationFailed" xmlns:sys="clr-namespace:System;assembly=mscorlib">시뮬레이션 실패</sys:String>
+    <sys:String x:Key="ValorantReady" xmlns:sys="clr-namespace:System;assembly=mscorlib">VALORANT 준비 완료</sys:String>
+    <sys:String x:Key="ValorantRunning" xmlns:sys="clr-namespace:System;assembly=mscorlib">VALORANT 실행 중</sys:String>
+    <sys:String x:Key="Scanning" xmlns:sys="clr-namespace:System;assembly=mscorlib">검색 중</sys:String>
+    <sys:String x:Key="VerifiedMessage" xmlns:sys="clr-namespace:System;assembly=mscorlib">VALORANT 설치를 확인했습니다.</sys:String>
+    <sys:String x:Key="RunningMessage" xmlns:sys="clr-namespace:System;assembly=mscorlib">VALORANT 프로세스가 실행 중입니다.</sys:String>
+    <sys:String x:Key="MissingMessage" xmlns:sys="clr-namespace:System;assembly=mscorlib">VALORANT를 찾지 못했습니다. 설치 후 다시 검색하거나 실행 파일을 직접 선택해 주세요.</sys:String>
+</ResourceDictionary>

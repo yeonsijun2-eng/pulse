@@ -330,6 +330,198 @@ h3 {
   line-height: 1.7;
 }
 
+.license-heading {
+  margin-top: 54px;
+}
+
+.license-intro {
+  max-width: 650px;
+  margin: -5px 0 20px;
+  color: #9095a0;
+  font-size: 12px;
+  line-height: 1.7;
+}
+
+.license-form,
+.license-receipt {
+  max-width: 650px;
+  padding: 20px;
+  border: 1px solid #252831;
+  border-radius: 8px;
+  background: linear-gradient(145deg, #111318, #0c0d10);
+}
+
+.receipt-restore {
+  max-width: 650px;
+  margin-top: 12px;
+  padding: 15px 20px;
+  border: 1px solid #252831;
+  border-radius: 8px;
+  background: #0d0e12;
+}
+
+.receipt-restore summary {
+  color: #aeb2bb;
+  cursor: pointer;
+  font-size: 9px;
+  font-weight: 650;
+  letter-spacing: .1em;
+}
+
+.receipt-restore label {
+  display: block;
+  margin-top: 14px;
+  color: #858a95;
+  font-size: 9px;
+  letter-spacing: .08em;
+}
+
+.receipt-restore textarea {
+  width: 100%;
+  margin: 8px 0 10px;
+  padding: 11px 12px;
+  border: 1px solid #30333b;
+  border-radius: 4px;
+  outline: none;
+  background: #090a0d;
+  color: #f4f5f7;
+  font: 10px Consolas, monospace;
+  resize: vertical;
+}
+
+.receipt-restore textarea:focus {
+  border-color: #9da2ac;
+}
+
+.license-form label,
+.license-help {
+  display: block;
+  color: #858a95;
+  font-size: 10px;
+  letter-spacing: .08em;
+}
+
+.license-input-row,
+.receipt-heading,
+.receipt-actions {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.license-input-row {
+  margin-top: 8px;
+}
+
+.license-input-row input,
+.admin-login input,
+.admin-license-code {
+  width: 100%;
+  min-width: 0;
+  padding: 13px 14px;
+  border: 1px solid #30333b;
+  border-radius: 4px;
+  outline: none;
+  background: #090a0d;
+  color: #f4f5f7;
+  font: 12px "Segoe UI", Arial, sans-serif;
+}
+
+.license-input-row input {
+  font-family: Consolas, monospace;
+  letter-spacing: .06em;
+}
+
+.license-input-row input:focus,
+.admin-login input:focus,
+.admin-license-code:focus {
+  border-color: #9da2ac;
+}
+
+.license-help {
+  margin-top: 8px;
+  color: #777c86;
+  letter-spacing: 0;
+  line-height: 1.6;
+}
+
+.license-primary-button,
+.license-secondary-button {
+  min-height: 42px;
+  padding: 0 16px;
+  border: 1px solid #e6e8ed;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: .1em;
+  transition: background 160ms ease, color 160ms ease, transform 160ms ease;
+}
+
+.license-primary-button {
+  background: #e6e8ed;
+  color: #111217;
+}
+
+.license-primary-button:hover:not(:disabled) {
+  transform: translateY(-1px);
+  background: #fff;
+}
+
+.license-secondary-button {
+  flex: 0 0 auto;
+  border-color: #383b43;
+  background: #121419;
+  color: #d7d9de;
+}
+
+.license-secondary-button:hover:not(:disabled) {
+  border-color: #777c86;
+  background: #191b21;
+}
+
+.license-primary-button:disabled,
+.license-secondary-button:disabled {
+  cursor: not-allowed;
+  opacity: .45;
+}
+
+.license-form > .license-primary-button {
+  margin-top: 18px;
+}
+
+.license-receipt {
+  margin-top: 12px;
+}
+
+.receipt-heading strong {
+  display: block;
+  margin-top: 8px;
+  font-size: 14px;
+  font-weight: 550;
+  letter-spacing: .04em;
+}
+
+.receipt-actions {
+  justify-content: flex-start;
+  flex-wrap: wrap;
+  margin-top: 15px;
+}
+
+.license-feedback {
+  min-height: 18px;
+  max-width: 650px;
+  margin: 9px 0 0;
+  color: #aeb2bb;
+  font-size: 11px;
+  line-height: 1.6;
+}
+
+.license-feedback[data-error="true"] {
+  color: #e6a3a3;
+}
+
 footer {
   min-height: 70px;
   display: flex;
@@ -340,6 +532,15 @@ footer {
   border-top: 1px solid #202229;
   color: #6e737d;
   font-size: 10px;
+}
+
+.issuer-link {
+  color: #6e737d;
+  text-decoration: none;
+}
+
+.issuer-link:hover {
+  color: #f4f5f7;
 }
 
 @keyframes rise-in {
@@ -428,10 +629,36 @@ footer {
 
   footer {
     min-height: 64px;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    gap: 5px;
+    padding-top: 15px;
+    padding-bottom: 15px;
+  }
+
+  .license-form,
+  .license-receipt,
+  .receipt-restore {
+    padding: 15px;
+  }
+
+  .license-input-row {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .receipt-heading {
     align-items: flex-start;
     flex-direction: column;
-    justify-content: center;
-    gap: 5px;
+  }
+
+  .license-primary-button,
+  .license-secondary-button {
+    min-height: 40px;
+  }
+
+  .receipt-actions > button {
+    flex: 1 1 100%;
   }
 }
 

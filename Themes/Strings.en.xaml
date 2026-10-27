@@ -1,0 +1,108 @@
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <sys:String x:Key="NavHome" xmlns:sys="clr-namespace:System;assembly=mscorlib">HOME</sys:String>
+    <sys:String x:Key="NavInjector" xmlns:sys="clr-namespace:System;assembly=mscorlib">INJECTOR</sys:String>
+    <sys:String x:Key="NavSettings" xmlns:sys="clr-namespace:System;assembly=mscorlib">SETTINGS</sys:String>
+    <sys:String x:Key="Setup" xmlns:sys="clr-namespace:System;assembly=mscorlib">SETUP</sys:String>
+    <sys:String x:Key="LicenseAuthentication" xmlns:sys="clr-namespace:System;assembly=mscorlib">LICENSE AUTHENTICATION</sys:String>
+    <sys:String x:Key="LicenseKey" xmlns:sys="clr-namespace:System;assembly=mscorlib">LICENSE KEY</sys:String>
+    <sys:String x:Key="LicenseKeyFormat" xmlns:sys="clr-namespace:System;assembly=mscorlib">Paste the signed PULSE1 license issued for this device</sys:String>
+    <sys:String x:Key="DeviceId" xmlns:sys="clr-namespace:System;assembly=mscorlib">DEVICE ID — SEND THIS TO THE LICENSE ISSUER</sys:String>
+    <sys:String x:Key="DeviceIdHint" xmlns:sys="clr-namespace:System;assembly=mscorlib">Select and copy this ID to request your device-bound license</sys:String>
+    <sys:String x:Key="RememberMe" xmlns:sys="clr-namespace:System;assembly=mscorlib">REMEMBER ME</sys:String>
+    <sys:String x:Key="ActivateLicense" xmlns:sys="clr-namespace:System;assembly=mscorlib">ACTIVATE LICENSE</sys:String>
+    <sys:String x:Key="InvalidKeyFormat" xmlns:sys="clr-namespace:System;assembly=mscorlib">Enter the complete signed license code issued for this device.</sys:String>
+    <sys:String x:Key="InvalidLicenseKey" xmlns:sys="clr-namespace:System;assembly=mscorlib">INVALID LICENSE KEY</sys:String>
+    <sys:String x:Key="LicenseExpiredError" xmlns:sys="clr-namespace:System;assembly=mscorlib">LICENSE EXPIRED</sys:String>
+    <sys:String x:Key="LicenseRevokedError" xmlns:sys="clr-namespace:System;assembly=mscorlib">LICENSE REVOKED</sys:String>
+    <sys:String x:Key="LicenseRequired" xmlns:sys="clr-namespace:System;assembly=mscorlib">A valid license is required for this action.</sys:String>
+    <sys:String x:Key="LogoutFailed" xmlns:sys="clr-namespace:System;assembly=mscorlib">Could not fully clear the saved license session</sys:String>
+    <sys:String x:Key="ConnectionFailed" xmlns:sys="clr-namespace:System;assembly=mscorlib">CONNECTION FAILED</sys:String>
+    <sys:String x:Key="SessionStorageFailed" xmlns:sys="clr-namespace:System;assembly=mscorlib">SESSION STORAGE FAILED</sys:String>
+    <sys:String x:Key="SettingsLoadFailed" xmlns:sys="clr-namespace:System;assembly=mscorlib">Could not load settings. Default preferences will be used.</sys:String>
+    <sys:String x:Key="InvalidServerResponse" xmlns:sys="clr-namespace:System;assembly=mscorlib">The license server returned incomplete or invalid license information.</sys:String>
+    <sys:String x:Key="Calibrating" xmlns:sys="clr-namespace:System;assembly=mscorlib">Calibrating PULSE</sys:String>
+    <sys:String x:Key="StepInterface" xmlns:sys="clr-namespace:System;assembly=mscorlib">Initializing interface</sys:String>
+    <sys:String x:Key="StepSystem" xmlns:sys="clr-namespace:System;assembly=mscorlib">Checking system information</sys:String>
+    <sys:String x:Key="StepValorant" xmlns:sys="clr-namespace:System;assembly=mscorlib">Locating VALORANT installation</sys:String>
+    <sys:String x:Key="StepFinalize" xmlns:sys="clr-namespace:System;assembly=mscorlib">Finalizing configuration</sys:String>
+    <sys:String x:Key="StepWorking" xmlns:sys="clr-namespace:System;assembly=mscorlib">Working…</sys:String>
+    <sys:String x:Key="SetupWaiting" xmlns:sys="clr-namespace:System;assembly=mscorlib">Preparing your environment…</sys:String>
+    <sys:String x:Key="StepReady" xmlns:sys="clr-namespace:System;assembly=mscorlib">Interface and preferences ready.</sys:String>
+    <sys:String x:Key="StepInstalled" xmlns:sys="clr-namespace:System;assembly=mscorlib">Installation verified.</sys:String>
+    <sys:String x:Key="StepNotFound" xmlns:sys="clr-namespace:System;assembly=mscorlib">VALORANT was not found. You can continue setup and install it later.</sys:String>
+    <sys:String x:Key="StepValorantNotFoundDetail" xmlns:sys="clr-namespace:System;assembly=mscorlib">Not installed — install it from the official website after setup.</sys:String>
+    <sys:String x:Key="StepSaved" xmlns:sys="clr-namespace:System;assembly=mscorlib">Preferences saved.</sys:String>
+    <sys:String x:Key="SystemDetails" xmlns:sys="clr-namespace:System;assembly=mscorlib">{0} · {1} · {2} threads</sys:String>
+    <sys:String x:Key="Cancelled" xmlns:sys="clr-namespace:System;assembly=mscorlib">Cancelled</sys:String>
+    <sys:String x:Key="SetupPaused" xmlns:sys="clr-namespace:System;assembly=mscorlib">Setup paused</sys:String>
+    <sys:String x:Key="Retry" xmlns:sys="clr-namespace:System;assembly=mscorlib">RETRY</sys:String>
+    <sys:String x:Key="Status" xmlns:sys="clr-namespace:System;assembly=mscorlib">STATUS</sys:String>
+    <sys:String x:Key="InstallPath" xmlns:sys="clr-namespace:System;assembly=mscorlib">INSTALL PATH</sys:String>
+    <sys:String x:Key="NoVerifiedPath" xmlns:sys="clr-namespace:System;assembly=mscorlib">No verified path</sys:String>
+    <sys:String x:Key="Launch" xmlns:sys="clr-namespace:System;assembly=mscorlib">Launch VALORANT</sys:String>
+    <sys:String x:Key="Download" xmlns:sys="clr-namespace:System;assembly=mscorlib">DOWNLOAD VALORANT</sys:String>
+    <sys:String x:Key="RetryScan" xmlns:sys="clr-namespace:System;assembly=mscorlib">RETRY SCAN</sys:String>
+    <sys:String x:Key="Browse" xmlns:sys="clr-namespace:System;assembly=mscorlib">Browse</sys:String>
+    <sys:String x:Key="NotFoundHeadline" xmlns:sys="clr-namespace:System;assembly=mscorlib">VALORANT NOT FOUND</sys:String>
+    <sys:String x:Key="PathInvalid" xmlns:sys="clr-namespace:System;assembly=mscorlib">PATH INVALID</sys:String>
+    <sys:String x:Key="InstallNotice" xmlns:sys="clr-namespace:System;assembly=mscorlib">VALORANT isn't installed yet. You can install it from Riot's official website, or scan again if it's already installed.</sys:String>
+    <sys:String x:Key="Dismiss" xmlns:sys="clr-namespace:System;assembly=mscorlib">DISMISS</sys:String>
+    <sys:String x:Key="Injector" xmlns:sys="clr-namespace:System;assembly=mscorlib">INJECTOR</sys:String>
+    <sys:String x:Key="SimulationSafety" xmlns:sys="clr-namespace:System;assembly=mscorlib">DEMO MODE · No game code or memory is modified.</sys:String>
+    <sys:String x:Key="DemoGameDetected" xmlns:sys="clr-namespace:System;assembly=mscorlib">VALORANT detected · visual demo available</sys:String>
+    <sys:String x:Key="DemoWaitingForGame" xmlns:sys="clr-namespace:System;assembly=mscorlib">Waiting for VALORANT to be detected</sys:String>
+    <sys:String x:Key="Log" xmlns:sys="clr-namespace:System;assembly=mscorlib">ACTIVITY LOG</sys:String>
+    <sys:String x:Key="ClearLogs" xmlns:sys="clr-namespace:System;assembly=mscorlib">CLEAR LOGS</sys:String>
+    <sys:String x:Key="Animations" xmlns:sys="clr-namespace:System;assembly=mscorlib">Animations</sys:String>
+    <sys:String x:Key="AnimationsDescription" xmlns:sys="clr-namespace:System;assembly=mscorlib">Enable cinematic startup and page transitions.</sys:String>
+    <sys:String x:Key="LogInitializing" xmlns:sys="clr-namespace:System;assembly=mscorlib">Initializing environment...</sys:String>
+    <sys:String x:Key="LogLoadingConfiguration" xmlns:sys="clr-namespace:System;assembly=mscorlib">Loading configuration...</sys:String>
+    <sys:String x:Key="LogPreparingModules" xmlns:sys="clr-namespace:System;assembly=mscorlib">Preparing visual modules...</sys:String>
+    <sys:String x:Key="LogProcessingProgress" xmlns:sys="clr-namespace:System;assembly=mscorlib">Processing timed progress...</sys:String>
+    <sys:String x:Key="LogFinalizingSequence" xmlns:sys="clr-namespace:System;assembly=mscorlib">Finalizing visual sequence...</sys:String>
+    <sys:String x:Key="LogSequenceComplete" xmlns:sys="clr-namespace:System;assembly=mscorlib">Visual sequence complete.</sys:String>
+    <sys:String x:Key="LogSequenceCancelled" xmlns:sys="clr-namespace:System;assembly=mscorlib">Visual sequence cancelled.</sys:String>
+    <sys:String x:Key="LogSequenceFailed" xmlns:sys="clr-namespace:System;assembly=mscorlib">Visual sequence failed.</sys:String>
+    <sys:String x:Key="LaunchingValorant" xmlns:sys="clr-namespace:System;assembly=mscorlib">Launching VALORANT...</sys:String>
+    <sys:String x:Key="ValorantRunningResult" xmlns:sys="clr-namespace:System;assembly=mscorlib">VALORANT is running.</sys:String>
+    <sys:String x:Key="Settings" xmlns:sys="clr-namespace:System;assembly=mscorlib">SETTINGS</sys:String>
+    <sys:String x:Key="Language" xmlns:sys="clr-namespace:System;assembly=mscorlib">LANGUAGE</sys:String>
+    <sys:String x:Key="LanguageDescription" xmlns:sys="clr-namespace:System;assembly=mscorlib">Choose the language used throughout PULSE.</sys:String>
+    <sys:String x:Key="Storage" xmlns:sys="clr-namespace:System;assembly=mscorlib">STORAGE</sys:String>
+    <sys:String x:Key="SaveSettings" xmlns:sys="clr-namespace:System;assembly=mscorlib">Save settings</sys:String>
+    <sys:String x:Key="ResetSettings" xmlns:sys="clr-namespace:System;assembly=mscorlib">Reset Settings</sys:String>
+    <sys:String x:Key="English" xmlns:sys="clr-namespace:System;assembly=mscorlib">English</sys:String>
+    <sys:String x:Key="Korean" xmlns:sys="clr-namespace:System;assembly=mscorlib">한국어</sys:String>
+    <sys:String x:Key="LicenseType7Day" xmlns:sys="clr-namespace:System;assembly=mscorlib">7-DAY LICENSE</sys:String>
+    <sys:String x:Key="LicenseType30Day" xmlns:sys="clr-namespace:System;assembly=mscorlib">30-DAY LICENSE</sys:String>
+    <sys:String x:Key="LicenseTypePermanent" xmlns:sys="clr-namespace:System;assembly=mscorlib">PERMANENT LICENSE</sys:String>
+    <sys:String x:Key="ImportLicenseFile" xmlns:sys="clr-namespace:System;assembly=mscorlib">IMPORT LICENSE FILE</sys:String>
+    <sys:String x:Key="LicenseFileReadFailed" xmlns:sys="clr-namespace:System;assembly=mscorlib">Could not read the selected license file.</sys:String>
+    <sys:String x:Key="LicenseActive" xmlns:sys="clr-namespace:System;assembly=mscorlib">ACTIVE</sys:String>
+    <sys:String x:Key="LicenseExpired" xmlns:sys="clr-namespace:System;assembly=mscorlib">EXPIRED</sys:String>
+    <sys:String x:Key="LicenseRevoked" xmlns:sys="clr-namespace:System;assembly=mscorlib">REVOKED</sys:String>
+    <sys:String x:Key="NeverExpires" xmlns:sys="clr-namespace:System;assembly=mscorlib">NEVER EXPIRES</sys:String>
+    <sys:String x:Key="StatusUnavailable" xmlns:sys="clr-namespace:System;assembly=mscorlib">STATUS UNAVAILABLE</sys:String>
+    <sys:String x:Key="ExpiresInDays" xmlns:sys="clr-namespace:System;assembly=mscorlib">EXPIRES IN {0} DAYS</sys:String>
+    <sys:String x:Key="ExpiresInHours" xmlns:sys="clr-namespace:System;assembly=mscorlib">EXPIRES IN {0} HOURS</sys:String>
+    <sys:String x:Key="ExpiresInMinutes" xmlns:sys="clr-namespace:System;assembly=mscorlib">EXPIRES IN {0} MINUTES</sys:String>
+    <sys:String x:Key="ExpiryDate" xmlns:sys="clr-namespace:System;assembly=mscorlib">EXPIRES {0}</sys:String>
+    <sys:String x:Key="LicenseStatus" xmlns:sys="clr-namespace:System;assembly=mscorlib">LICENSE STATUS</sys:String>
+    <sys:String x:Key="LicenseTypeLabel" xmlns:sys="clr-namespace:System;assembly=mscorlib">LICENSE TYPE</sys:String>
+    <sys:String x:Key="Expires" xmlns:sys="clr-namespace:System;assembly=mscorlib">EXPIRATION</sys:String>
+    <sys:String x:Key="Logout" xmlns:sys="clr-namespace:System;assembly=mscorlib">LOG OUT</sys:String>
+    <sys:String x:Key="InjectAction" xmlns:sys="clr-namespace:System;assembly=mscorlib">INJECT</sys:String>
+    <sys:String x:Key="IdleSimulation" xmlns:sys="clr-namespace:System;assembly=mscorlib">WAITING FOR VALORANT</sys:String>
+    <sys:String x:Key="Preparing" xmlns:sys="clr-namespace:System;assembly=mscorlib">Preparing...</sys:String>
+    <sys:String x:Key="Processing" xmlns:sys="clr-namespace:System;assembly=mscorlib">Processing...</sys:String>
+    <sys:String x:Key="Injecting" xmlns:sys="clr-namespace:System;assembly=mscorlib">Injecting...</sys:String>
+    <sys:String x:Key="SimulationCancelled" xmlns:sys="clr-namespace:System;assembly=mscorlib">Simulation cancelled</sys:String>
+    <sys:String x:Key="SimulationFailed" xmlns:sys="clr-namespace:System;assembly=mscorlib">Simulation failed</sys:String>
+    <sys:String x:Key="ValorantReady" xmlns:sys="clr-namespace:System;assembly=mscorlib">VALORANT READY</sys:String>
+    <sys:String x:Key="ValorantRunning" xmlns:sys="clr-namespace:System;assembly=mscorlib">VALORANT RUNNING</sys:String>
+    <sys:String x:Key="Scanning" xmlns:sys="clr-namespace:System;assembly=mscorlib">SCANNING</sys:String>
+    <sys:String x:Key="VerifiedMessage" xmlns:sys="clr-namespace:System;assembly=mscorlib">VALORANT installation verified.</sys:String>
+    <sys:String x:Key="RunningMessage" xmlns:sys="clr-namespace:System;assembly=mscorlib">VALORANT process is running.</sys:String>
+    <sys:String x:Key="MissingMessage" xmlns:sys="clr-namespace:System;assembly=mscorlib">VALORANT was not found. Install it, then retry scan or browse to the executable.</sys:String>
+</ResourceDictionary>
